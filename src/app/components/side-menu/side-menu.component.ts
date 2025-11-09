@@ -25,6 +25,7 @@ import {
   informationCircleOutline, 
   codeSlashOutline, 
   callOutline,
+  receiptOutline,
   logOutOutline
 } from 'ionicons/icons';
 import { AuthService, User } from 'src/app/services/auth.service';
@@ -66,6 +67,7 @@ export class SideMenuComponent {
       informationCircleOutline, 
       codeSlashOutline, 
       callOutline,
+      receiptOutline,
       logOutOutline
     });
   }

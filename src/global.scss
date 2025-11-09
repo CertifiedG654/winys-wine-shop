@@ -35,3 +35,77 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+/* Minimalist, elegant system-wide design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --ion-font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+html, body, ion-app, ion-content {
+  background: var(--ion-background-color);
+}
+
+body, ion-app {
+  font-family: var(--ion-font-family);
+  color: var(--ion-text-color);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Toolbar: understated, professional */
+ion-header, ion-toolbar {
+  --background: var(--ion-toolbar-background);
+  --color: var(--ion-text-color);
+  border-bottom: 1px solid var(--ion-border-color);
+  box-shadow: var(--app-elevation-0);
+  backdrop-filter: blur(8px);
+}
+
+/* Cards: soft elevation and rounded corners */
+ion-card {
+  --background: var(--ion-card-background);
+  border-radius: var(--app-shape-radius);
+  box-shadow: var(--app-elevation-1);
+  border: 1px solid var(--ion-border-color);
+}
+ion-card-title {
+  letter-spacing: 0.2px;
+}
+
+/* Buttons: crisp + rounded, clear hierarchy */
+ion-button {
+  --border-radius: 12px;
+  --box-shadow: none;
+  font-weight: 600;
+}
+
+/* Items & lists: more breathing room */
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 12px;
+  --min-height: 56px;
+  --background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+ion-list {
+  background: transparent !important;
+}
+
+/* Badges: subtle yet legible */
+ion-badge {
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+/* Headings rhythm */
+.page-title, h2, h3, h4 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+/* Utility spacing */
+.spacer-sm { height: 8px; }
+.spacer    { height: 16px; }
+.spacer-lg { height: 24px; }

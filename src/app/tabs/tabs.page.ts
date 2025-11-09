@@ -5,11 +5,32 @@ import {
   IonTabBar, 
   IonTabButton, 
   IonIcon, 
-  IonLabel 
+  IonLabel,
+  IonMenu,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonList,
+  IonItem,
+  IonMenuToggle
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { wineOutline, cartOutline, personOutline, settingsOutline } from 'ionicons/icons';
+import { 
+  wineOutline, 
+  cartOutline, 
+  receiptOutline,
+  personOutline, 
+  settingsOutline,
+  businessOutline,
+  informationCircleOutline,
+  codeSlashOutline,
+  callOutline,
+  logOutOutline
+} from 'ionicons/icons';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-tabs',
@@ -18,17 +39,37 @@ import { AuthService } from '../services/auth.service';
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     IonTabs,
     IonTabBar,
     IonTabButton,
     IonIcon,
-    IonLabel
+    IonLabel,
+    IonMenu,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonContent,
+    IonList,
+    IonItem,
+    IonMenuToggle
   ]
 })
 export class TabsPage {
 
-  constructor(private authService: AuthService) {
-    addIcons({ wineOutline, cartOutline, personOutline, settingsOutline });
+  constructor(private authService: AuthService, private router: Router) {
+    addIcons({ 
+      wineOutline, 
+      cartOutline, 
+      receiptOutline,
+      personOutline, 
+      settingsOutline,
+      businessOutline,
+      informationCircleOutline,
+      codeSlashOutline,
+      callOutline,
+      logOutOutline
+    });
   }
 
   isAdmin(): boolean {
@@ -37,5 +78,10 @@ export class TabsPage {
 
   isCustomer(): boolean {
     return this.authService.isCustomer();
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/products']);
   }
 }

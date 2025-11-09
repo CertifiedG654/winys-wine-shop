@@ -5,13 +5,15 @@ import {
   IonToolbar, 
   IonTitle, 
   IonContent,
+  IonMenu,
+  IonList as IonListCmp,
+  IonItem as IonItemCmp,
+  IonLabel as IonLabelCmp,
+  IonMenuToggle,
   IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonList,
-  IonItem,
-  IonLabel,
   IonIcon,
   IonButtons,
   IonMenuButton
@@ -23,7 +25,12 @@ import {
   heartOutline, 
   starOutline,
   cartOutline,
-  personOutline, wineOutline, codeSlashOutline } from 'ionicons/icons';
+  personOutline, wineOutline, codeSlashOutline,
+  businessOutline, informationCircleOutline, callOutline, logOutOutline,
+  receiptOutline
+} from 'ionicons/icons';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-about-app',
@@ -32,24 +39,37 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
+    IonMenu,
+    IonListCmp,
+    IonItemCmp,
+    IonLabelCmp,
+    IonMenuToggle,
     IonCard,
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    IonList,
-    IonItem,
-    IonLabel,
     IonIcon,
     IonButtons,
     IonMenuButton
   ]
 })
 export class AboutAppPage {
-  constructor() {
-    addIcons({rocketOutline,starOutline,wineOutline,cartOutline,personOutline,shieldCheckmarkOutline,heartOutline,codeSlashOutline});
+  constructor(private authService: AuthService, private router: Router) {
+    addIcons({
+      rocketOutline,starOutline,wineOutline,cartOutline,personOutline,
+      shieldCheckmarkOutline,heartOutline,codeSlashOutline,
+      businessOutline, informationCircleOutline, callOutline, logOutOutline,
+      receiptOutline
+    });
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/products']);
   }
 }

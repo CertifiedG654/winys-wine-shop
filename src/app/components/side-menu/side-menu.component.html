@@ -50,6 +50,13 @@
       </ion-menu-toggle>
 
       <ion-menu-toggle auto-hide="false">
+        <ion-item [routerLink]="['/customer/orders']" routerDirection="root">
+          <ion-icon name="receipt-outline" slot="start"></ion-icon>
+          <ion-label>Orders</ion-label>
+        </ion-item>
+      </ion-menu-toggle>
+
+      <ion-menu-toggle auto-hide="false">
         <ion-item [routerLink]="['/company-history']" routerDirection="root">
           <ion-icon name="business-outline" slot="start"></ion-icon>
           <ion-label>Company History</ion-label>
@@ -87,14 +94,6 @@
 </ion-menu>
 
 <div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Winys Store</ion-title>
-    </ion-toolbar>
-  </ion-header>
   <ion-content>
     <router-outlet></router-outlet>
   </ion-content>

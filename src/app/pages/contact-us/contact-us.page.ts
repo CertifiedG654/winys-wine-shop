@@ -5,13 +5,16 @@ import {
   IonToolbar, 
   IonTitle, 
   IonContent,
+  IonMenu,
+  IonList,
+  IonItem as IonItemCmp,
+  IonLabel as IonLabelCmp,
+  IonMenuToggle,
+  IonIcon as IonIconCmp,
   IonCard,
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
-  IonItem,
-  IonLabel,
-  IonIcon,
   IonButton,
   IonButtons,
   IonMenuButton
@@ -24,8 +27,18 @@ import {
   mailOutline,
   logoFacebook,
   logoInstagram,
-  logoTwitter
+  logoTwitter,
+  receiptOutline,
+  wineOutline,
+  cartOutline,
+  businessOutline,
+  informationCircleOutline,
+  codeSlashOutline,
+  callOutline as callOutlineIcon,
+  logOutOutline
 } from 'ionicons/icons';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-contact-us',
@@ -34,24 +47,28 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
+    IonMenu,
+    IonList,
+    IonItemCmp,
+    IonLabelCmp,
+    IonMenuToggle,
+    IonIconCmp,
     IonCard,
     IonCardHeader,
     IonCardTitle,
     IonCardContent,
-    IonItem,
-    IonLabel,
-    IonIcon,
     IonButton,
     IonButtons,
     IonMenuButton
   ]
 })
 export class ContactUsPage {
-  constructor() {
+  constructor(private authService: AuthService, private router: Router) {
     addIcons({ 
       callOutline, 
       locationOutline, 
@@ -59,7 +76,15 @@ export class ContactUsPage {
       mailOutline,
       logoFacebook,
       logoInstagram,
-      logoTwitter
+      logoTwitter,
+      receiptOutline,
+      wineOutline,
+      cartOutline,
+      businessOutline,
+      informationCircleOutline,
+      codeSlashOutline,
+      callOutlineIcon,
+      logOutOutline
     });
   }
 
@@ -73,5 +98,10 @@ export class ContactUsPage {
 
   sendEmail() {
     window.open('mailto:info@winysstore.com', '_self');
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/products']);
   }
 }

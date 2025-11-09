@@ -5,6 +5,12 @@ import {
   IonToolbar, 
   IonTitle, 
   IonContent,
+  IonMenu,
+  IonList,
+  IonItem,
+  IonLabel,
+  IonMenuToggle,
+  IonIcon,
   IonCard,
   IonCardHeader,
   IonCardTitle,
@@ -13,6 +19,19 @@ import {
   IonButtons,
   IonMenuButton
 } from '@ionic/angular/standalone';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
+import { addIcons } from 'ionicons';
+import { 
+  wineOutline,
+  cartOutline,
+  receiptOutline,
+  businessOutline,
+  informationCircleOutline,
+  codeSlashOutline,
+  callOutline,
+  logOutOutline
+} from 'ionicons/icons';
 
 @Component({
   selector: 'app-developers',
@@ -21,10 +40,17 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    RouterModule,
     IonHeader,
     IonToolbar,
     IonTitle,
     IonContent,
+    IonMenu,
+    IonList,
+    IonItem,
+    IonLabel,
+    IonMenuToggle,
+    IonIcon,
     IonCard,
     IonCardHeader,
     IonCardTitle,
@@ -34,4 +60,22 @@ import {
     IonMenuButton
   ]
 })
-export class DevelopersPage {}
+export class DevelopersPage {
+  constructor(private authService: AuthService, private router: Router) {
+    addIcons({
+      wineOutline,
+      cartOutline,
+      receiptOutline,
+      businessOutline,
+      informationCircleOutline,
+      codeSlashOutline,
+      callOutline,
+      logOutOutline
+    });
+  }
+
+  async logout() {
+    await this.authService.logout();
+    this.router.navigate(['/products']);
+  }
+}
