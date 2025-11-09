@@ -1,0 +1,7 @@
+{
+  "name": "winys-store",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
