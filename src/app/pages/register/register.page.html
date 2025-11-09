@@ -1,0 +1,144 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Create Account</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="register-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Join Winys Store</ion-card-title>
+        <ion-card-title style="font-size: 16px; margin-top: 8px;">Create your customer account</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <form (ngSubmit)="register()">
+          <ion-list>
+            <!-- Profile Image Upload -->
+            <ion-item lines="none">
+              <ion-label class="profile-image-label">Profile Image (Optional)</ion-label>
+            </ion-item>
+            <ion-item lines="none">
+              <div class="profile-image-container">
+                <div class="profile-image-preview" [class.has-image]="profileImagePreview">
+                  @if (profileImagePreview) {
+                    <img [src]="profileImagePreview" alt="Profile Preview">
+                  } @else {
+                    <div class="profile-image-placeholder">
+                      <ion-icon name="person-outline"></ion-icon>
+                    </div>
+                  }
+                </div>
+                <input 
+                  type="file" 
+                  #fileInput
+                  (change)="onFileSelected($event)"
+                  accept="image/*"
+                  style="display: none"
+                >
+                <ion-button fill="clear" (click)="fileInput.click()" size="small">
+                  <ion-icon name="camera-outline" slot="start"></ion-icon>
+                  Choose Image
+                </ion-button>
+                @if (profileImagePreview) {
+                  <ion-button fill="clear" color="danger" (click)="removeProfileImage()" size="small">
+                    <ion-icon name="trash-outline" slot="start"></ion-icon>
+                    Remove
+                  </ion-button>
+                }
+              </div>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">First Name *</ion-label>
+              <ion-input 
+                [(ngModel)]="userData.firstName" 
+                name="firstName"
+                type="text" 
+                required
+                placeholder="Enter your first name">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Last Name *</ion-label>
+              <ion-input 
+                [(ngModel)]="userData.lastName" 
+                name="lastName"
+                type="text" 
+                required
+                placeholder="Enter your last name">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Email Address *</ion-label>
+              <ion-input 
+                [(ngModel)]="userData.email" 
+                name="email"
+                type="email" 
+                required
+                placeholder="Enter your email">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Address</ion-label>
+              <ion-input 
+                [(ngModel)]="userData.address" 
+                name="address"
+                type="text" 
+                placeholder="Enter your address">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Contact Number</ion-label>
+              <ion-input 
+                [(ngModel)]="userData.contactNumber" 
+                name="contactNumber"
+                type="tel" 
+                placeholder="Enter your phone number">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Password *</ion-label>
+              <ion-input 
+                [(ngModel)]="userData.password" 
+                name="password"
+                type="password" 
+                required
+                placeholder="Create a password">
+              </ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Confirm Password *</ion-label>
+              <ion-input 
+                [(ngModel)]="userData.confirmPassword" 
+                name="confirmPassword"
+                type="password" 
+                required
+                placeholder="Confirm your password">
+              </ion-input>
+            </ion-item>
+          </ion-list>
+
+          <ion-button 
+            type="submit" 
+            expand="block" 
+            [disabled]="isLoading"
+            class="register-button">
+            Create Account
+          </ion-button>
+        </form>
+
+        <div class="login-link">
+          <p>Already have an account? <a [routerLink]="['/login']">Sign In</a></p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

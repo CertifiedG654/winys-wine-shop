@@ -1,0 +1,157 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Contact Us</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="contact-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title class="main-title">Get In Touch</ion-card-title>
+        <ion-card-title style="font-size: 18px; color: var(--ion-color-primary);">We'd Love to Hear From You</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="contact-intro">
+          <p>Whether you have questions about our wines, need assistance with your order, or just want to share your wine experience, we're here to help. Reach out to us through any of the following channels.</p>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-methods">
+          <ion-card class="contact-card">
+            <ion-card-content>
+              <ion-item lines="none">
+                <ion-icon name="call-outline" slot="start" color="primary"></ion-icon>
+                <ion-label>
+                  <h3>Phone Number</h3>
+                  <p>Call us directly for immediate assistance</p>
+                </ion-label>
+              </ion-item>
+              <div class="contact-action">
+                <ion-button expand="block" (click)="callStore()" color="primary">
+                  <ion-icon name="call-outline" slot="start"></ion-icon>
+                  Call 0976-310-0213
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="contact-card">
+            <ion-card-content>
+              <ion-item lines="none">
+                <ion-icon name="location-outline" slot="start" color="primary"></ion-icon>
+                <ion-label>
+                  <h3>Store Location</h3>
+                  <p>Visit our physical store in Cubao</p>
+                </ion-label>
+              </ion-item>
+              <div class="contact-details">
+                <p><strong>Address:</strong> Cubao, Quezon City, Philippines</p>
+                <p><strong>Landmark:</strong> Near Gateway Mall and Araneta Coliseum</p>
+              </div>
+              <div class="contact-action">
+                <ion-button expand="block" (click)="openMap()" color="secondary">
+                  <ion-icon name="location-outline" slot="start"></ion-icon>
+                  Open in Maps
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="contact-card">
+            <ion-card-content>
+              <ion-item lines="none">
+                <ion-icon name="time-outline" slot="start" color="primary"></ion-icon>
+                <ion-label>
+                  <h3>Business Hours</h3>
+                  <p>When you can visit or call us</p>
+                </ion-label>
+              </ion-item>
+              <div class="contact-details">
+                <p><strong>Monday - Friday:</strong> 9:00 AM - 9:00 PM</p>
+                <p><strong>Saturday:</strong> 10:00 AM - 8:00 PM</p>
+                <p><strong>Sunday:</strong> 11:00 AM - 6:00 PM</p>
+                <p><strong>Holidays:</strong> 11:00 AM - 5:00 PM</p>
+              </div>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-card class="contact-card">
+            <ion-card-content>
+              <ion-item lines="none">
+                <ion-icon name="mail-outline" slot="start" color="primary"></ion-icon>
+                <ion-label>
+                  <h3>Email Support</h3>
+                  <p>Send us your queries and feedback</p>
+                </ion-label>
+              </ion-item>
+              <div class="contact-details">
+                <p><strong>General Inquiries:</strong> info@winysstore.com</p>
+                <p><strong>Customer Support:</strong> support@winysstore.com</p>
+                <p><strong>Business Proposals:</strong> business@winysstore.com</p>
+              </div>
+              <div class="contact-action">
+                <ion-button expand="block" (click)="sendEmail()" color="tertiary">
+                  <ion-icon name="mail-outline" slot="start"></ion-icon>
+                  Send Email
+                </ion-button>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </div>
+
+        <!-- Social Media -->
+        <div class="social-section">
+          <h3>📱 Follow Us on Social Media</h3>
+          <p>Stay updated with our latest wine collections, promotions, and events</p>
+          
+          <div class="social-buttons">
+            <ion-button color="primary" fill="outline">
+              <ion-icon name="logo-facebook" slot="start"></ion-icon>
+              Facebook
+            </ion-button>
+            
+            <ion-button color="danger" fill="outline">
+              <ion-icon name="logo-instagram" slot="start"></ion-icon>
+              Instagram
+            </ion-button>
+            
+            <ion-button color="secondary" fill="outline">
+              <ion-icon name="logo-twitter" slot="start"></ion-icon>
+              Twitter
+            </ion-button>
+          </div>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-section">
+          <h3>❓ Frequently Asked Questions</h3>
+          
+          <div class="faq-item">
+            <h4>Do you offer delivery services?</h4>
+            <p>Yes! We offer delivery within Metro Manila. Same-day delivery available for orders placed before 3:00 PM.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h4>Can I return or exchange wine?</h4>
+            <p>We accept returns within 7 days for unopened bottles. Due to alcohol regulations, opened bottles cannot be returned.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h4>Do you have wine tasting events?</h4>
+            <p>Yes! We host monthly wine tasting events. Check our social media for upcoming schedules and registration details.</p>
+          </div>
+          
+          <div class="faq-item">
+            <h4>Is there a membership program?</h4>
+            <p>Absolutely! Join our Wine Club for exclusive discounts, early access to new arrivals, and member-only events.</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

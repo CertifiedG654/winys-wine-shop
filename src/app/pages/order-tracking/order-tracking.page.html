@@ -1,0 +1,85 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Order Tracking</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (order) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Order #{{ order.id }}</ion-card-title>
+        <ion-card-title style="font-size: 16px; color: var(--ion-color-primary);">
+          Placed on {{ formatDate(order.createdAt) }}
+        </ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <!-- Order Summary -->
+        <div class="order-summary">
+          <h3>Order Summary</h3>
+          @for (item of order.items; track item.product.id) {
+            <ion-item lines="none">
+              <ion-label>
+                {{ item.quantity }}x {{ item.product.name }}
+              </ion-label>
+              <ion-text slot="end" color="primary">
+                ${{ (item.product.price * item.quantity).toFixed(2) }}
+              </ion-text>
+            </ion-item>
+          }
+          <div class="order-total">
+            <strong>Total: ${{ order.total.toFixed(2) }}</strong>
+          </div>
+        </div>
+
+        <!-- Tracking Timeline -->
+        <div class="tracking-timeline">
+          <h3>Order Status</h3>
+          @for (step of trackingSteps; track step.status) {
+            <div class="timeline-step" [class]="getStepStatus(step.status)">
+              <div class="timeline-icon">
+                <ion-icon [name]="getStatusIcon(step.status)" [color]="getStatusColor(step.status)"></ion-icon>
+              </div>
+              <div class="timeline-content">
+                <div class="step-header">
+                  <h4>{{ step.label }}</h4>
+                  @if (getStepStatus(step.status) === 'complete' || getStepStatus(step.status) === 'current') {
+                    <ion-badge [color]="getStepStatus(step.status) === 'complete' ? 'success' : 'primary'">
+                      {{ getStepStatus(step.status) === 'complete' ? 'Complete' : 'Current' }}
+                    </ion-badge>
+                  }
+                </div>
+                @if (getLastStatusUpdate(step.status)) {
+                  <p class="step-date">{{ formatDate(getLastStatusUpdate(step.status)!) }}</p>
+                } @else {
+                  <p class="step-date">TBD</p>
+                }
+                <p class="step-description">{{ step.description }}</p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- Order Details -->
+        <div class="order-details">
+          <h3>Delivery Information</h3>
+          <p><strong>Customer:</strong> {{ order.customerName }}</p>
+          <p><strong>Email:</strong> {{ order.customerEmail }}</p>
+          <p><strong>Contact:</strong> {{ order.customerContact }}</p>
+          <p><strong>Address:</strong> {{ order.customerAddress }}</p>
+          @if (order.assignedCashier) {
+            <p><strong>Assigned Cashier:</strong> {{ order.assignedCashier }}</p>
+          }
+        </div>
+
+        <ion-button expand="block" (click)="continueShopping()" fill="outline">
+          Continue Shopping
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  }
+</ion-content>

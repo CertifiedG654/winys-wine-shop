@@ -1,0 +1,129 @@
+.contact-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.main-title {
+  text-align: center;
+  color: var(--ion-color-primary);
+  margin-bottom: 8px;
+}
+
+.contact-intro {
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--ion-color-dark);
+  line-height: 1.6;
+}
+
+.contact-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 30px;
+}
+
+.contact-card {
+  border-left: 4px solid var(--ion-color-primary);
+}
+
+.contact-details {
+  padding: 0 16px 16px 16px;
+  
+  p {
+    margin: 8px 0;
+    color: var(--ion-color-dark);
+    
+    strong {
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+.contact-action {
+  padding: 0 16px;
+}
+
+.social-section {
+  background: var(--ion-color-light);
+  padding: 20px;
+  border-radius: 12px;
+  margin: 30px 0;
+  text-align: center;
+
+  h3 {
+    color: var(--ion-color-primary);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  p {
+    margin: 0 0 20px 0;
+    color: var(--ion-color-medium);
+  }
+}
+
+.social-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.faq-section {
+  h3 {
+    color: var(--ion-color-primary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+}
+
+.faq-item {
+  background: var(--ion-color-light);
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  border-left: 4px solid var(--ion-color-primary);
+
+  h4 {
+    margin: 0 0 8px 0;
+    color: var(--ion-color-primary);
+    font-size: 16px;
+  }
+
+  p {
+    margin: 0;
+    color: var(--ion-color-dark);
+    line-height: 1.5;
+  }
+}
+
+ion-item {
+  --background: transparent;
+  
+  h3 {
+    margin: 0 0 4px 0;
+    color: var(--ion-color-primary);
+  }
+  
+  p {
+    margin: 0;
+    color: var(--ion-color-medium);
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .social-buttons {
+    flex-direction: column;
+    
+    ion-button {
+      margin-bottom: 8px;
+    }
+  }
+}

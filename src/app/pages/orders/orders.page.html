@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  @if (orders.length === 0) {
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>No orders yet</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>You don't have any orders yet. Place an order to see it here.</p>
+        <ion-button expand="block" (click)="router.navigate(['/tabs/products'])">Browse Products</ion-button>
+      </ion-card-content>
+    </ion-card>
+  }
+
+  @if (ongoingOrders.length > 0) {
+    <h3>Ongoing Orders</h3>
+    <ion-list>
+      @for (order of ongoingOrders; track order.id) {
+        <ion-item button (click)="viewOrder(order)">
+          <ion-label>
+            <h4>Order #{{ order.id }}</h4>
+            <p>{{ order.customerName }} • {{ order.createdAt | date:'medium' }}</p>
+          </ion-label>
+          <ion-badge [color]="order.status === 'pending' ? 'warning' : (order.status === 'processing' ? 'primary' : 'tertiary')">{{ order.status.toUpperCase() }}</ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+  }
+
+  @if (completedOrders.length > 0) {
+    <h3>Completed Orders</h3>
+    <ion-list>
+      @for (order of completedOrders; track order.id) {
+        <ion-item button (click)="viewOrder(order)">
+          <ion-label>
+            <h4>Order #{{ order.id }}</h4>
+            <p>{{ order.customerName }} • {{ order.createdAt | date:'medium' }}</p>
+          </ion-label>
+          <ion-badge color="success">DELIVERED</ion-badge>
+        </ion-item>
+      }
+    </ion-list>
+  }
+</ion-content>

@@ -1,0 +1,32 @@
+.no-data {
+  text-align: center;
+  color: var(--ion-color-medium);
+  font-style: italic;
+  padding: 20px;
+}
+
+.summary-stats {
+  .stat-item {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--ion-color-light-shade);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+    
+    strong {
+      color: var(--ion-color-primary);
+    }
+  }
+}
+
+ion-card[color] {
+  ion-card-header {
+    text-align: center;
+    
+    ion-card-title {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  }
+}

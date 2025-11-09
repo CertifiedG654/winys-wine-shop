@@ -1,0 +1,151 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/admin"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Manage Orders</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Filters -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Order Management</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label>Filter by Status:</ion-label>
+        <ion-select [(ngModel)]="selectedStatus" (ionChange)="onStatusChange()" placeholder="Select status">
+          @for (option of statusOptions; track option.value) {
+            <ion-select-option [value]="option.value">{{ option.label }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="stacked">Cashier Name</ion-label>
+        <ion-input [(ngModel)]="cashierName" placeholder="Enter cashier name"></ion-input>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Orders List -->
+  @if (filteredOrders.length === 0) {
+    <div class="empty-state">
+      <ion-icon name="cart-outline" class="empty-icon"></ion-icon>
+      <h3>No orders found</h3>
+      <p>There are no orders matching your selected filter.</p>
+    </div>
+  } @else {
+    <ion-list>
+      @for (order of filteredOrders; track order.id) {
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Order #{{ order.id }}</ion-card-title>
+            <ion-card-title style="font-size: 14px; color: var(--ion-color-medium);">
+              {{ formatDate(order.createdAt) }} • {{ getOrderItemsCount(order) }} items
+            </ion-card-title>
+          </ion-card-header>
+          
+          <ion-card-content>
+            <!-- Customer Info -->
+            <div class="customer-info">
+              <h4>Customer: {{ order.customerName }}</h4>
+              <p>{{ order.customerEmail }} • {{ order.customerContact }}</p>
+              <p>{{ order.customerAddress }}</p>
+            </div>
+
+            <!-- Order Items -->
+            <div class="order-items">
+              <h4>Order Items:</h4>
+              @for (item of order.items; track item.product.id) {
+                <ion-item lines="none">
+                  <ion-label>
+                    {{ item.quantity }}x {{ item.product.name }}
+                  </ion-label>
+                  <ion-text slot="end" color="primary">
+                    ${{ (item.product.price * item.quantity).toFixed(2) }}
+                  </ion-text>
+                </ion-item>
+              }
+              <div class="order-total">
+                <strong>Total: ${{ order.total.toFixed(2) }}</strong>
+              </div>
+            </div>
+
+            <!-- Current Status -->
+            <div class="status-section">
+              <ion-badge [color]="getStatusColor(order.status)" class="status-badge">
+                {{ order.status.toUpperCase() }}
+              </ion-badge>
+              
+              @if (order.assignedCashier) {
+                <p><small>Assigned to: {{ order.assignedCashier }}</small></p>
+              }
+            </div>
+
+            <!-- Status Controls -->
+            <div class="action-buttons">
+              @if (order.status === 'pending') {
+                <ion-button expand="block" (click)="updateOrderStatus(order, 'processing')" color="primary">
+                  <ion-icon name="checkmark-outline" slot="start"></ion-icon>
+                  Start Processing
+                </ion-button>
+              }
+              
+              @if (order.status === 'processing') {
+                <ion-button expand="block" (click)="updateOrderStatus(order, 'shipped')" color="secondary">
+                  <ion-icon name="cart-outline" slot="start"></ion-icon>
+                  Mark as Shipped
+                </ion-button>
+              }
+              
+              @if (order.status === 'shipped') {
+                <ion-button expand="block" (click)="updateOrderStatus(order, 'out-for-delivery')" color="tertiary">
+                  <ion-icon name="time-outline" slot="start"></ion-icon>
+                  Out for Delivery
+                </ion-button>
+              }
+              
+              @if (order.status === 'out-for-delivery') {
+                <div class="complete-order">
+                  <ion-item>
+                    <ion-label position="stacked">Final Price</ion-label>
+                    <ion-input 
+                      type="number" 
+                      [(ngModel)]="finalPrices[order.id]" 
+                      [placeholder]="'$' + order.total.toFixed(2)"
+                      min="0"
+                      step="0.01">
+                    </ion-input>
+                  </ion-item>
+                  <ion-button expand="block" (click)="completeOrder(order)" color="success">
+                    <ion-icon name="cash-outline" slot="start"></ion-icon>
+                    Complete Order
+                  </ion-button>
+                </div>
+              }
+            </div>
+
+            <!-- Status History -->
+            <div class="status-history">
+              <h4>Status History:</h4>
+              @for (history of order.statusHistory.slice().reverse(); track history.timestamp) {
+                <div class="history-item">
+                  <ion-text color="medium">
+                    <small>{{ formatDate(history.timestamp) }} - {{ history.status }}</small>
+                  </ion-text>
+                  @if (history.note) {
+                    <br>
+                    <small>{{ history.note }}</small>
+                  }
+                </div>
+              }
+            </div>
+          </ion-card-content>
+        </ion-card>
+      }
+    </ion-list>
+  }
+</ion-content>
