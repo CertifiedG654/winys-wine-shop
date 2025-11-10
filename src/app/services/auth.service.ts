@@ -11,6 +11,8 @@ export interface User {
   contactNumber: string;
   profileImage?: string;
   role: 'admin' | 'customer';
+  lastLogin?: Date;
+  createdAt: Date;
 }
 
 @Injectable({
@@ -30,7 +32,9 @@ export class AuthService {
       address: 'Admin Address',
       contactNumber: '+1234567890',
       profileImage: '',
-      role: 'admin'
+      role: 'admin',
+      createdAt: new Date('2023-01-01'),
+      lastLogin: new Date()
     }
   ];
 
@@ -38,7 +42,56 @@ export class AuthService {
     this.autoLogin();
   }
 
-  register(userData: Omit<User, 'id' | 'role'>): { success: boolean; error?: string } {
+  // User Management Methods
+  getAllUsers(): Promise<User[]> {
+    return Promise.resolve(this.users);
+  }
+
+  getUserById(id: number): Promise<User | undefined> {
+    const user = this.users.find(u => u.id === id);
+    return Promise.resolve(user);
+  }
+
+  async updateUserRole(userId: number, newRole: 'admin' | 'customer'): Promise<boolean> {
+    const userIndex = this.users.findIndex(u => u.id === userId);
+    if (userIndex === -1) return false;
+
+    // Check if this would remove the last admin
+    if (this.users[userIndex].role === 'admin' && newRole === 'customer') {
+      const adminCount = this.users.filter(u => u.role === 'admin').length;
+      if (adminCount <= 1) {
+        return false;
+      }
+    }
+
+    this.users[userIndex].role = newRole;
+    localStorage.setItem('users', JSON.stringify(this.users));
+
+    // If this is the current user, update their session
+    if (this.currentUser.value?.id === userId) {
+      const updatedUser = { ...this.users[userIndex] };
+      await this.refreshUserSession(updatedUser);
+    }
+
+    return true;
+  }
+
+  async deleteUser(userId: number): Promise<boolean> {
+    const userIndex = this.users.findIndex(u => u.id === userId);
+    if (userIndex === -1) return false;
+
+    this.users.splice(userIndex, 1);
+    return true;
+  }
+
+  async updateUserLastLogin(userId: number): Promise<void> {
+    const userIndex = this.users.findIndex(u => u.id === userId);
+    if (userIndex !== -1) {
+      this.users[userIndex].lastLogin = new Date();
+    }
+  }
+
+  register(userData: Omit<User, 'id' | 'role' | 'createdAt' | 'lastLogin'>): { success: boolean; error?: string } {
     // Check if email already exists
     const existingUser = this.users.find(u => u.email === userData.email);
     if (existingUser) {
@@ -48,6 +101,7 @@ export class AuthService {
     // Create new user
     const newUser: User = {
       ...userData,
+      createdAt: new Date(),
       id: this.users.length + 1,
       role: 'customer'
     };
@@ -91,6 +145,11 @@ export class AuthService {
 
   getCurrentUser(): User | null {
     return this.currentUser.value;
+  }
+
+  async refreshUserSession(user: User): Promise<void> {
+    this.currentUser.next(user);
+    localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
   isAdmin(): boolean {

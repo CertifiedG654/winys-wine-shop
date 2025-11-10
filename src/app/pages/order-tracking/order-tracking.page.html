@@ -27,12 +27,12 @@
                 {{ item.quantity }}x {{ item.product.name }}
               </ion-label>
               <ion-text slot="end" color="primary">
-                ${{ (item.product.price * item.quantity).toFixed(2) }}
+                ₱{{ (item.product.price * item.quantity).toFixed(2) }}
               </ion-text>
             </ion-item>
           }
           <div class="order-total">
-            <strong>Total: ${{ order.total.toFixed(2) }}</strong>
+            <strong>Total: ₱{{ order.total.toFixed(2) }}</strong>
           </div>
         </div>
 

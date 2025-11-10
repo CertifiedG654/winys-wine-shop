@@ -92,6 +92,34 @@
           </ion-item>
         </ion-menu-toggle>
 
+        <!-- Admin Section -->
+        @if (isAdmin()) {
+          <div class="menu-divider">
+            <ion-label>Admin Controls</ion-label>
+          </div>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerLink]="['/admin-orders']" routerDirection="root">
+              <ion-icon name="bag-check-outline" slot="start"></ion-icon>
+              <ion-label>Manage Orders</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerLink]="['/sales-analytics']" routerDirection="root">
+              <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
+              <ion-label>Sales Analytics</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerLink]="['/user-management']" routerDirection="forward">
+              <ion-icon name="people-outline" slot="start"></ion-icon>
+              <ion-label>User Management</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        }
+
         <!-- Logout Button -->
         <ion-item button (click)="logout()" class="logout-item">
           <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>

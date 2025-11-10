@@ -29,13 +29,14 @@
             <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
             <ion-label>Sales Analytics</ion-label>
           </ion-item>
-          <ion-item>
+          <ion-item button (click)="navigateToUserManagement()">
             <ion-icon name="people-outline" slot="start"></ion-icon>
             <ion-label>User Management</ion-label>
           </ion-item>
-          <ion-item>
+          <ion-item button disabled>
             <ion-icon name="settings-outline" slot="start"></ion-icon>
             <ion-label>Store Settings</ion-label>
+            <ion-text color="medium" slot="end">Coming Soon</ion-text>
           </ion-item>
         </ion-list>
       </ion-card-content>

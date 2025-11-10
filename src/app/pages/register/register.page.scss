@@ -51,6 +51,59 @@
   }
 }
 
+.camera-container {
+  width: 100%;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin: 16px 0;
+
+  video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--ion-color-light);
+  }
+
+  .camera-controls {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+.upload-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+
+  .upload-button {
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+    font-size: 14px;
+    border-radius: 8px;
+    background: var(--ion-color-light);
+    touch-action: manipulation;
+    
+    ion-icon {
+      margin-right: 8px;
+      font-size: 18px;
+    }
+  }
+
+  .upload-hint {
+    font-size: 12px;
+    text-align: center;
+  }
+}
+
 .register-button {
   margin-top: 20px;
 }

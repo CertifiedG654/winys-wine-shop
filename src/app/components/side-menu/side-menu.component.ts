@@ -13,7 +13,9 @@ import {
   IonLabel, 
   IonIcon,
   IonAvatar,
-  IonMenuToggle
+  IonMenuToggle,
+  IonItemDivider,
+  IonText
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -25,7 +27,10 @@ import {
   codeSlashOutline, 
   callOutline,
   receiptOutline,
-  logOutOutline
+  logOutOutline,
+  barChartOutline,
+  peopleOutline,
+  bagCheckOutline
 } from 'ionicons/icons';
 import { AuthService, User } from 'src/app/services/auth.service';
 
@@ -48,7 +53,9 @@ import { AuthService, User } from 'src/app/services/auth.service';
     IonLabel,
     IonIcon,
     IonAvatar,
-    IonMenuToggle
+    IonMenuToggle,
+    IonItemDivider,
+    IonText
   ]
 })
 export class SideMenuComponent {
@@ -57,17 +64,7 @@ export class SideMenuComponent {
     public authService: AuthService,
     private router: Router
   ) {
-    addIcons({ 
-      personOutline, 
-      wineOutline, 
-      cartOutline, 
-      businessOutline, 
-      informationCircleOutline, 
-      codeSlashOutline, 
-      callOutline,
-      receiptOutline,
-      logOutOutline
-    });
+    addIcons({personOutline,callOutline,wineOutline,cartOutline,receiptOutline,businessOutline,informationCircleOutline,codeSlashOutline,bagCheckOutline,peopleOutline,barChartOutline,logOutOutline});
   }
 
   async logout() {
@@ -88,5 +85,10 @@ export class SideMenuComponent {
   getProfileImage(): string {
     const user = this.authService.getCurrentUser();
     return user?.profileImage || '';
+  }
+
+  isAdmin(): boolean {
+    const user = this.authService.getCurrentUser();
+    return user?.role === 'admin';
   }
 }

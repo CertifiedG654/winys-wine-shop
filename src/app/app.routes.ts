@@ -37,13 +37,18 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/contact-us/contact-us.page').then(m => m.ContactUsPage)
   },
   {
-    path: 'admin-orders',
-    loadComponent: () => import('./pages/admin-orders/admin-orders.page').then(m => m.AdminOrdersPage),
+    path: 'admin/orders',
+    loadComponent: () => import('./pages/admin/orders/admin-orders.page').then(m => m.AdminOrdersPage),
     canActivate: [AdminGuard]
   },
   {
-    path: 'sales-analytics',
-    loadComponent: () => import('./pages/sales-analytics/sales-analytics.page').then(m => m.SalesAnalyticsPage),
+    path: 'admin/sales-analytics',
+    loadComponent: () => import('./pages/admin/sales-analytics/sales-analytics.page').then(m => m.SalesAnalyticsPage),
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/user-management',
+    loadComponent: () => import('./pages/admin/user-management/user-management.page').then(m => m.UserManagementPage),
     canActivate: [AdminGuard]
   },
   {

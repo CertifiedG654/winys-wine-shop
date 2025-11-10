@@ -3,20 +3,21 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Winys Store</ion-title>
-    <ion-buttons slot="end">
+    <ion-title class="ion-hide-md-down">Winys Store</ion-title>
+    <ion-buttons slot="end" class="header-buttons">
       @if (!isLoggedIn()) {
         <ion-button (click)="navigateToLogin()">
           <ion-icon name="log-in-outline" slot="start"></ion-icon>
-          Login
+          <span class="ion-hide-md-down">Login</span>
         </ion-button>
       }
       @if (isLoggedIn()) {
-        <ion-button (click)="goToCart()">
+        <ion-button (click)="goToCart()" class="cart-button">
           <ion-icon name="cart-outline" slot="start"></ion-icon>
-          Cart ({{ getCartItemCount() }})
+          <span class="ion-hide-md-down">Cart ({{ getCartItemCount() }})</span>
+          <ion-badge color="primary" class="ion-hide-md-up cart-badge">{{ getCartItemCount() }}</ion-badge>
         </ion-button>
-        <ion-button (click)="goToProfile()">
+        <ion-button (click)="goToProfile()" class="welcome-button ion-hide-md-down">
           Welcome, {{ getCurrentUser()?.firstName }}
         </ion-button>
         <ion-button (click)="logout()" color="danger">
@@ -40,7 +41,10 @@
       <ion-row>
         @for (product of products; track product.id) {
           <ion-col size="12" size-md="6" size-lg="4">
-            <ion-card class="product-card premium-card">
+            <ion-card class="product-card premium-card" (click)="openProductDetails(product)">
+              <div class="product-image-container">
+                <img [src]="product.image" [alt]="product.name" class="product-image" onError="this.src='assets/images/wines/default-wine.jpg'"/>
+              </div>
               <ion-card-header class="card-header">
                 <ion-card-title class="product-name">{{ product.name }}</ion-card-title>
                 <div class="product-details">
@@ -62,11 +66,7 @@
 
                 <div class="pricing">
                   <div class="right">
-                    <p class="price">${{ product.price }}</p>
-                    <ion-button fill="solid" (click)="addToCart(product)" color="primary">
-                      <ion-icon name="cart-outline" slot="start"></ion-icon>
-                      Add
-                    </ion-button>
+                    <p class="price">₱{{ product.price }}</p>
                   </div>
                 </div>
 
@@ -78,6 +78,9 @@
                     <ion-icon name="star" class="star filled"></ion-icon>
                     <ion-icon name="star-outline" class="star"></ion-icon>
                   </div>
+                  <div class="view-details">
+                    <small>Click to view details</small>
+                  </div>
                 </div>
               </ion-card-content>
             </ion-card>
@@ -86,4 +89,101 @@
       </ion-row>
     </ion-grid>
   </div>
+
+  <ion-modal #modal [isOpen]="isModalOpen" (didDismiss)="closeProductDetails()" class="product-details-modal">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Product Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeProductDetails()">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-no-padding">
+        @if (selectedProduct) {
+          <div class="product-modal-content">
+            <div class="modal-layout">
+              <div class="modal-left-section">
+                <div class="modal-image-container">
+                  <img [src]="selectedProduct.image" [alt]="selectedProduct.name" class="modal-product-image" onError="this.src='assets/images/wines/default-wine.jpg'"/>
+                </div>
+              </div>
+              
+              <div class="modal-right-section">
+                <h1>{{ selectedProduct.name }}</h1>
+                
+                <div class="price-tag">
+                  <ion-text color="primary">
+                    <h2>₱{{ selectedProduct.price }}</h2>
+                  </ion-text>
+                </div>
+
+                <div class="wine-details-grid">
+                  <div class="detail-item">
+                    <strong>Wine Type</strong>
+                    <ion-badge [color]="selectedProduct.type.toLowerCase() === 'red' ? 'danger' : 'warning'">
+                      {{ selectedProduct.type }}
+                    </ion-badge>
+                  </div>
+
+                  <div class="detail-item">
+                    <strong>Varietal(s)</strong>
+                    <span>{{ selectedProduct.varietal }}</span>
+                  </div>
+
+                  <div class="detail-item">
+                    <strong>Country</strong>
+                    <span>{{ selectedProduct.country }}</span>
+                  </div>
+
+                  <div class="detail-item">
+                    <strong>Region</strong>
+                    <span>{{ selectedProduct.region }}</span>
+                  </div>
+
+                  <div class="detail-item">
+                    <strong>Bottle Size</strong>
+                    <span>{{ selectedProduct.size }}</span>
+                  </div>
+
+                  @if (selectedProduct.abv) {
+                    <div class="detail-item">
+                      <strong>ABV</strong>
+                      <span>{{ selectedProduct.abv }}</span>
+                    </div>
+                  }
+                </div>
+
+                <div class="description">
+                  <h3>Description</h3>
+                  <p>{{ selectedProduct.description }}</p>
+                </div>
+
+                @if (selectedProduct.flavors) {
+                  <div class="flavors">
+                    <h3>Tasting Notes</h3>
+                    <p>{{ selectedProduct.flavors }}</p>
+                  </div>
+                }
+
+                @if (selectedProduct.pairings) {
+                  <div class="pairings">
+                    <h3>Food Pairings</h3>
+                    <p>{{ selectedProduct.pairings }}</p>
+                  </div>
+                }
+
+                <ion-button expand="block" (click)="addToCart(selectedProduct)" class="add-to-cart-button">
+                  Add to Cart
+                  <ion-icon name="cart-outline" slot="end"></ion-icon>
+                </ion-button>
+              </div>
+            </div>
+          </div>
+        }
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

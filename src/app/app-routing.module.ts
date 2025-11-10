@@ -48,6 +48,11 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: 'admin/user-management',
+    loadComponent: () => import('./pages/admin/user-management/user-management.page').then(m => m.UserManagementPage),
+    canActivate: [AuthGuard]
+  },
+  {
     path: '**',
     redirectTo: '',
     pathMatch: 'full'

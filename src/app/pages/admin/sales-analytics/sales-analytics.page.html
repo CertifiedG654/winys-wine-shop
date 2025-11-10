@@ -5,6 +5,31 @@
     </ion-buttons>
     <ion-title>Sales Analytics</ion-title>
   </ion-toolbar>
+  <ion-toolbar class="export-toolbar">
+    <ion-buttons slot="end">
+      <ion-button class="export-button" (click)="exportToExcel()">
+        <ion-icon name="document-text-outline" slot="start"></ion-icon>
+        <span class="export-text">Export Excel</span>
+      </ion-button>
+      <ion-button class="export-button" (click)="exportToCSV()">
+        <ion-icon name="document-outline" slot="start"></ion-icon>
+        <span class="export-text">Export CSV</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="dateRange" (ionChange)="onDateRangeChange()">
+      <ion-segment-button value="daily">
+        <ion-label>Daily</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="weekly">
+        <ion-label>Weekly</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="monthly">
+        <ion-label>Monthly</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
@@ -15,7 +40,7 @@
         <ion-card color="primary">
           <ion-card-header>
             <ion-card-title>{{ totalOrders }}</ion-card-title>
-            <ion-card-title style="font-size: 16px;">Total Orders</ion-card-title>
+            <ion-card-subtitle>Total Orders</ion-card-subtitle>
           </ion-card-header>
         </ion-card>
       </ion-col>
@@ -24,7 +49,7 @@
         <ion-card color="success">
           <ion-card-header>
             <ion-card-title>{{ formatCurrency(totalRevenue) }}</ion-card-title>
-            <ion-card-title style="font-size: 16px;">Total Revenue</ion-card-title>
+            <ion-card-subtitle>Total Revenue</ion-card-subtitle>
           </ion-card-header>
         </ion-card>
       </ion-col>
@@ -33,7 +58,7 @@
         <ion-card color="warning">
           <ion-card-header>
             <ion-card-title>{{ formatCurrency(averageOrderValue) }}</ion-card-title>
-            <ion-card-title style="font-size: 16px;">Average Order</ion-card-title>
+            <ion-card-subtitle>Average Order</ion-card-subtitle>
           </ion-card-header>
         </ion-card>
       </ion-col>
@@ -42,10 +67,40 @@
         <ion-card color="secondary">
           <ion-card-header>
             <ion-card-title>{{ popularProducts.length }}</ion-card-title>
-            <ion-card-title style="font-size: 16px;">Top Products</ion-card-title>
+            <ion-card-subtitle>Top Products</ion-card-subtitle>
           </ion-card-header>
         </ion-card>
       </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Charts Section -->
+  <ion-grid>
+    <ion-row>
+      <!-- Sales Trend Chart -->
+      <ion-col size="12" size-lg="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Sales Trend</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <canvas #salesChart></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+      <!-- Product Performance Chart -->
+      <ion-col size="12" size-lg="6">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Product Performance</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <canvas #productsChart></canvas>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
     </ion-row>
   </ion-grid>
 
@@ -99,29 +154,6 @@
           }
         </ion-list>
       }
-    </ion-card-content>
-  </ion-card>
-
-  <!-- Sales Summary -->
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>Sales Summary</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="summary-stats">
-        <div class="stat-item">
-          <strong>Total Completed Orders:</strong> {{ totalOrders }}
-        </div>
-        <div class="stat-item">
-          <strong>Total Revenue:</strong> {{ formatCurrency(totalRevenue) }}
-        </div>
-        <div class="stat-item">
-          <strong>Average Order Value:</strong> {{ formatCurrency(averageOrderValue) }}
-        </div>
-        <div class="stat-item">
-          <strong>Reporting Period:</strong> All time
-        </div>
-      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>

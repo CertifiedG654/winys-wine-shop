@@ -1,3 +1,13 @@
+.menu-divider {
+  padding: 16px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ion-color-medium);
+  background: var(--ion-item-background);
+  border-top: 1px solid var(--ion-border-color);
+  border-bottom: 1px solid var(--ion-border-color);
+}
+
 .user-profile-section {
   padding: 20px 16px;
   background: linear-gradient(

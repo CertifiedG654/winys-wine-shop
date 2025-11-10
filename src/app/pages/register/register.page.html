@@ -30,17 +30,43 @@
                     </div>
                   }
                 </div>
+                <!-- File Input -->
                 <input 
-                  type="file" 
+                  type="file"
                   #fileInput
-                  (change)="onFileSelected($event)"
                   accept="image/*"
                   style="display: none"
+                  (change)="onFileSelected($event)"
                 >
-                <ion-button fill="clear" (click)="fileInput.click()" size="small">
-                  <ion-icon name="camera-outline" slot="start"></ion-icon>
-                  Choose Image
-                </ion-button>
+                
+                <!-- Camera View -->
+                @if (showCamera) {
+                  <div class="camera-container">
+                    <video #video autoplay playsinline style="width: 100%; max-width: 300px;"></video>
+                    <canvas #canvas style="display: none;"></canvas>
+                    <div class="camera-controls">
+                      <ion-button color="primary" (click)="takePicture()">
+                        Capture
+                      </ion-button>
+                      <ion-button color="danger" (click)="stopCamera()">
+                        Cancel
+                      </ion-button>
+                    </div>
+                  </div>
+                }
+                
+                <!-- Upload Buttons -->
+                @if (!showCamera) {
+                  <div class="upload-buttons">
+                    <ion-button fill="clear" size="small" class="upload-button" (click)="openImageOptions()">
+                      <ion-icon name="camera-outline" slot="start"></ion-icon>
+                      Select Photo
+                    </ion-button>
+                    <ion-text color="medium" class="upload-hint">
+                      Select or take a new photo
+                    </ion-text>
+                  </div>
+                }
                 @if (profileImagePreview) {
                   <ion-button fill="clear" color="danger" (click)="removeProfileImage()" size="small">
                     <ion-icon name="trash-outline" slot="start"></ion-icon>

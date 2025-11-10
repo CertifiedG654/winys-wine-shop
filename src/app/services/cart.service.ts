@@ -174,7 +174,7 @@ export class CartService {
       order.statusHistory.push({
         status: 'delivered',
         timestamp: new Date(),
-        note: `Order completed with final price: $${finalPrice}`
+        note: `Order completed with final price: ₱${finalPrice}`
       });
       
       this.orders.next(currentOrders);

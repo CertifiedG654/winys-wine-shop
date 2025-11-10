@@ -19,7 +19,8 @@ import {
   IonRow, 
   IonCol, 
   IonButtons, 
-  IonButton 
+  IonButton,
+  IonText
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { cubeOutline, peopleOutline, barChartOutline, settingsOutline, logOutOutline, cartOutline } from 'ionicons/icons';
@@ -50,7 +51,8 @@ import { AuthService } from 'src/app/services/auth.service';
     IonRow,
     IonCol,
     IonButtons,
-    IonButton
+    IonButton,
+    IonText
   ]
 })
 export class AdminPage implements OnInit {
@@ -70,10 +72,14 @@ export class AdminPage implements OnInit {
   }
 
   navigateToOrders() {
-    this.router.navigate(['/admin-orders']);
+    this.router.navigate(['/admin/orders']);
   }
 
   navigateToAnalytics() {
-    this.router.navigate(['/sales-analytics']);
+    this.router.navigate(['/admin/sales-analytics']);
+  }
+
+  navigateToUserManagement() {
+    this.router.navigate(['/admin/user-management']);
   }
 }
