@@ -6,95 +6,100 @@
   </ion-header>
 
   <ion-content>
-    <!-- User Profile Section -->
-    <div class="user-profile-section">
-      <ion-avatar class="user-avatar">
-        @if (authService.getCurrentUser()?.profileImage) {
-          <img [src]="authService.getCurrentUser()?.profileImage" alt="Profile">
-        } @else {
-          <div class="avatar-placeholder">
-            <ion-icon name="person-outline"></ion-icon>
-          </div>
-        }
-      </ion-avatar>
-      <div class="user-info">
-        <h3>{{ getFullName() }}</h3>
-        <p class="contact-number">
-          <ion-icon name="call-outline"></ion-icon>
-          {{ getContactNumber() }}
-        </p>
+    <div class="page-container">
+      <!-- Brand / Identity -->
+      <div class="menu-brand" style="padding: 16px 0 8px; border-bottom: 1px solid var(--ion-border-color);">
+        <h2 class="page-title" style="margin: 0; text-align: left;">WINYS</h2>
+        <p class="card-subtitle" style="margin: 4px 0 0 0;">Wine Boutique</p>
+        <div class="accent-divider" style="margin-top: 10px;"></div>
       </div>
+
+      <!-- User Profile Section -->
+      <div class="user-profile-section">
+        <ion-avatar class="user-avatar">
+          @if (authService.getCurrentUser()?.profileImage) {
+            <img [src]="authService.getCurrentUser()?.profileImage" alt="Profile">
+          } @else {
+            <div class="avatar-placeholder">
+              <ion-icon name="person-outline"></ion-icon>
+            </div>
+          }
+        </ion-avatar>
+        <div class="user-info">
+          <h3>{{ getFullName() }}</h3>
+          <p class="contact-number">
+            <ion-icon name="call-outline"></ion-icon>
+            {{ getContactNumber() }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Menu Items -->
+      <ion-list lines="none">
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/profile']" routerDirection="root">
+            <ion-icon name="person-outline" slot="start"></ion-icon>
+            <ion-label>My Profile</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/products']" routerDirection="root">
+            <ion-icon name="wine-outline" slot="start"></ion-icon>
+            <ion-label>Products</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/cart']" routerDirection="root">
+            <ion-icon name="cart-outline" slot="start"></ion-icon>
+            <ion-label>Cart</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/orders']" routerDirection="root">
+            <ion-icon name="receipt-outline" slot="start"></ion-icon>
+            <ion-label>Orders</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/company-history']" routerDirection="root">
+            <ion-icon name="business-outline" slot="start"></ion-icon>
+            <ion-label>Company History</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/about-app']" routerDirection="root">
+            <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+            <ion-label>About the App</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/developers']" routerDirection="root">
+            <ion-icon name="code-slash-outline" slot="start"></ion-icon>
+            <ion-label>Developers</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item [routerLink]="['/customer/contact-us']" routerDirection="root">
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+            <ion-label>Contact Us</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+
+        <!-- Logout Button -->
+        <ion-item button (click)="logout()" class="logout-item">
+          <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
+          <ion-label color="danger">Logout</ion-label>
+        </ion-item>
+      </ion-list>
     </div>
-
-    <!-- Menu Items -->
-    <ion-list lines="none">
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/tabs/profile']" routerDirection="root">
-          <ion-icon name="person-outline" slot="start"></ion-icon>
-          <ion-label>My Profile</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/tabs/products']" routerDirection="root">
-          <ion-icon name="wine-outline" slot="start"></ion-icon>
-          <ion-label>Products</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/tabs/cart']" routerDirection="root">
-          <ion-icon name="cart-outline" slot="start"></ion-icon>
-          <ion-label>Cart</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/customer/orders']" routerDirection="root">
-          <ion-icon name="receipt-outline" slot="start"></ion-icon>
-          <ion-label>Orders</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/company-history']" routerDirection="root">
-          <ion-icon name="business-outline" slot="start"></ion-icon>
-          <ion-label>Company History</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/about-app']" routerDirection="root">
-          <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-          <ion-label>About the App</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/developers']" routerDirection="root">
-          <ion-icon name="code-slash-outline" slot="start"></ion-icon>
-          <ion-label>Developers</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/contact-us']" routerDirection="root">
-          <ion-icon name="call-outline" slot="start"></ion-icon>
-          <ion-label>Contact Us</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-
-      <!-- Logout Button -->
-      <ion-item button (click)="logout()" class="logout-item">
-        <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
-        <ion-label color="danger">Logout</ion-label>
-      </ion-item>
-    </ion-list>
   </ion-content>
 </ion-menu>
 
-<div class="ion-page" id="main-content">
-  <ion-content>
-    <router-outlet></router-outlet>
-  </ion-content>
-</div>
+<ion-router-outlet id="main-content"></ion-router-outlet>

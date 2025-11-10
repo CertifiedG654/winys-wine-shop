@@ -1,32 +1,122 @@
 .products-container {
   padding: 16px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+:host {
+  /* Design tokens for this page */
+  --card-radius: 14px;
+  --card-shadow: 0 10px 28px rgba(16, 12, 10, 0.08);
+  --card-shadow-hover: 0 16px 44px rgba(16, 12, 10, 0.12);
+  --card-bg: #fffdfa;
+  --text-strong: #101112;
+  --text-muted: #6b7280;
+  --accent-wine: #b42b3a;
+  --gold: #caa24e;
+  --surface-stroke: color-mix(in oklab, #0b0d12 12%, #ffffff 94%);
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  /* Image sizing tokens (tweak these if card feels too tall) */
+  --product-image-height-min: 100px;
+  --product-image-height-max: 100px;
+  --product-image-frame-max: 100px;
+}
+
+.hero-section {
+  margin: 8px 0 18px;
+  background: radial-gradient(120% 120% at 80% -10%, rgba(139, 30, 63, 0.08) 0%, rgba(139, 30, 63, 0) 60%),
+              radial-gradient(100% 100% at 20% -20%, rgba(200, 169, 107, 0.06) 0%, rgba(200, 169, 107, 0) 60%),
+              #fffdf8;
+  border: 1px solid var(--ion-border-color);
+  border-radius: var(--app-shape-radius);
+  padding: 24px;
+  text-align: center;
 }
 
 .page-title {
   text-align: center;
-  margin-bottom: 8px;
-  color: var(--ion-color-primary);
-  font-size: 24px;
+  margin-bottom: 6px;
+  color: var(--ion-text-color);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  font-family: var(--app-heading-font);
 }
 
 .page-subtitle {
   text-align: center;
   margin-bottom: 24px;
   color: var(--ion-color-medium);
+  font-size: 14px;
 }
 
 .product-card {
   height: 100%;
-  transition: transform 0.2s ease;
-  
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: var(--card-bg);
+  border: 1px solid var(--surface-stroke);
+  position: relative;
+  box-shadow: var(--card-shadow);
+
   &:hover {
-    transform: translateY(-4px);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow-hover);
   }
+}
+
+.premium-card .card-eyebrow {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.card-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: var(--accent-wine);
+  color: #fff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 12px;
+  box-shadow: 0 8px 20px rgba(180, 43, 58, 0.28);
+  z-index: 2;
+}
+
+.card-header {
+  padding: 16px 16px 8px;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 16px 16px;
+  margin-top: auto; /* keep bottoms aligned across cards */
 }
 
 .product-name {
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--text-strong);
 }
 
 .product-details {
@@ -37,30 +127,31 @@
 }
 
 .wine-type {
-  padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  
+  letter-spacing: 0.6px;
+
   &.red {
-    background: #ffebee;
-    color: #c62828;
+    background: color-mix(in oklab, #8b1e3f 12%, #8b1e3f 0%);
+    color: #5c1229;
   }
-  
+
   &.white {
-    background: #fff8e1;
-    color: #f57f17;
+    background: color-mix(in oklab, #c8a96b 18%, #ffffff 90%);
+    color: #5a4a2a;
   }
-  
+
   &.rosé {
-    background: #fce4ec;
-    color: #ad1457;
+    background: color-mix(in oklab, #ad1457 10%, #ffffff 92%);
+    color: #6a1b3f;
   }
-  
+
   &.sparkling {
-    background: #e3f2fd;
-    color: #1565c0;
+    background: color-mix(in oklab, #22c55e 10%, #ffffff 92%);
+    color: #1f5e36;
   }
 }
 
@@ -72,24 +163,131 @@
 
 .product-image {
   width: 100%;
-  height: 120px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  border-radius: 8px;
+  height: clamp(var(--product-image-height-min), 22vw, var(--product-image-height-max)); /* fixed responsive height prevents card jumping */
+  background: radial-gradient(100% 100% at 50% 0%, rgba(139, 30, 63, 0.10) 0%, rgba(139, 30, 63, 0) 50%),
+              linear-gradient(135deg, #ffffff 0%, #fffaf1 100%);
+  border-radius: 10px;
   margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  
-  .wine-emoji {
-    font-size: 48px;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+  border: 1px solid var(--ion-border-color);
+  overflow: hidden; /* never let large images overflow */
+
+  .image-frame {
+    width: 100%;
+    max-width: var(--product-image-frame-max);
+    height: 100%; /* match container height so tokens control visual size */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    margin: 0 auto;
+    flex: 0 0 auto; /* prevent flexbox from stretching width */
   }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* preserve aspect ratio, never stretch */
+    display: block;
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  .image-placeholder-icon {
+    font-size: clamp(36px, 6vw, 48px);
+    color: color-mix(in oklab, var(--ion-color-primary), #000 12%);
+    opacity: 0.65;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-image { height: var(--product-image-height-max); }
+  .product-image .image-frame { max-width: var(--product-image-frame-max); }
+}
+
+.premium-card .product-image {
+  /* Force a compact, centered image area regardless of other styles */
+  height: var(--product-image-height-max) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.premium-card .product-image .image-frame {
+  max-width: var(--product-image-frame-max);
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 992px) {
+  .premium-card .product-image {
+    height: calc(var(--product-image-height-max) + 10px) !important;
+  }
+  .premium-card .product-image .image-frame {
+    max-width: calc(var(--product-image-frame-max) + 10px);
+  }
+}
+
+.pricing {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: 4px;
+}
+
+.pricing .left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.old-price {
+  color: var(--accent-wine);
+  font-size: 12px;
+  text-decoration: line-through;
+  opacity: 0.9;
 }
 
 .price {
   font-size: 20px;
-  font-weight: bold;
-  color: var(--ion-color-primary);
-  text-align: center;
-  margin: 12px 0;
+  font-weight: 700;
+  color: var(--ion-text-color);
+  margin: 8px 0 0;
+}
+
+.pricing .right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px dashed var(--surface-stroke);
+  margin-top: 6px;
+}
+
+.availability {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.rating {
+  display: inline-flex;
+  gap: 2px;
+}
+
+.rating .star {
+  font-size: 16px;
+  color: var(--text-muted);
+}
+
+.rating .star.filled {
+  color: var(--gold);
 }

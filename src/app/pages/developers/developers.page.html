@@ -1,61 +1,3 @@
-<ion-menu contentId="developers-content">
-  <ion-header>
-    <ion-toolbar color="primary">
-      <ion-title>Winys Store</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list lines="none">
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/tabs/products']" routerDirection="root">
-          <ion-icon name="wine-outline" slot="start"></ion-icon>
-          <ion-label>Products</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/tabs/cart']" routerDirection="root">
-          <ion-icon name="cart-outline" slot="start"></ion-icon>
-          <ion-label>Cart</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/customer/orders']" routerDirection="root">
-          <ion-icon name="receipt-outline" slot="start"></ion-icon>
-          <ion-label>Orders</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/company-history']" routerDirection="root">
-          <ion-icon name="business-outline" slot="start"></ion-icon>
-          <ion-label>Company History</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/about-app']" routerDirection="root">
-          <ion-icon name="information-circle-outline" slot="start"></ion-icon>
-          <ion-label>About the App</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/developers']" routerDirection="root">
-          <ion-icon name="code-slash-outline" slot="start"></ion-icon>
-          <ion-label>Developers</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-menu-toggle auto-hide="false">
-        <ion-item [routerLink]="['/contact-us']" routerDirection="root">
-          <ion-icon name="call-outline" slot="start"></ion-icon>
-          <ion-label>Contact Us</ion-label>
-        </ion-item>
-      </ion-menu-toggle>
-      <ion-item button (click)="logout()">
-        <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
-        <ion-label color="danger">Logout</ion-label>
-      </ion-item>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -65,12 +7,13 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content id="developers-content" class="ion-padding">
+<ion-content class="ion-padding">
   <div class="developers-container">
     <ion-card>
       <ion-card-header>
         <ion-card-title class="main-title">Meet Our Development Team</ion-card-title>
-        <ion-card-title style="font-size: 18px; color: var(--ion-color-primary);">The Minds Behind Winys Store App</ion-card-title>
+        <p class="card-subtitle">The Minds Behind Winys Store App</p>
+        <div class="accent-divider"></div>
       </ion-card-header>
       
       <ion-card-content>

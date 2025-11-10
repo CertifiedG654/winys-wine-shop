@@ -7,14 +7,13 @@ import {
   IonToolbar, 
   IonTitle, 
   IonContent, 
+  IonRouterOutlet,
   IonList, 
   IonItem, 
   IonLabel, 
   IonIcon,
   IonAvatar,
-  IonMenuToggle,
-  IonButtons,
-  IonMenuButton
+  IonMenuToggle
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -43,14 +42,13 @@ import { AuthService, User } from 'src/app/services/auth.service';
     IonToolbar,
     IonTitle,
     IonContent,
+    IonRouterOutlet,
     IonList,
     IonItem,
     IonLabel,
     IonIcon,
     IonAvatar,
-    IonMenuToggle,
-    IonButtons,
-    IonMenuButton
+    IonMenuToggle
   ]
 })
 export class SideMenuComponent {

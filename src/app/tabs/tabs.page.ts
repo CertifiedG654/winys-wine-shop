@@ -5,15 +5,7 @@ import {
   IonTabBar, 
   IonTabButton, 
   IonIcon, 
-  IonLabel,
-  IonMenu,
-  IonHeader,
-  IonToolbar,
-  IonTitle,
-  IonContent,
-  IonList,
-  IonItem,
-  IonMenuToggle
+  IonLabel
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -44,15 +36,7 @@ import { RouterModule } from '@angular/router';
     IonTabBar,
     IonTabButton,
     IonIcon,
-    IonLabel,
-    IonMenu,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonList,
-    IonItem,
-    IonMenuToggle
+    IonLabel
   ]
 })
 export class TabsPage {

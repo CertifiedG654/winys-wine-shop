@@ -29,33 +29,56 @@
 
 <ion-content>
   <div class="products-container">
-    <h2 class="page-title">Our Premium Wine Collection</h2>
-    <p class="page-subtitle">30 exquisite wines from around the world</p>
+    <section class="hero-section">
+      <div class="hero-copy">
+        <h1 class="page-title">Our Premium Wine Collection</h1>
+        <p class="page-subtitle">30 exquisite wines from around the world</p>
+      </div>
+    </section>
     
     <ion-grid>
       <ion-row>
         @for (product of products; track product.id) {
           <ion-col size="12" size-md="6" size-lg="4">
-            <ion-card class="product-card">
-              <ion-card-header>
+            <ion-card class="product-card premium-card">
+              <ion-card-header class="card-header">
                 <ion-card-title class="product-name">{{ product.name }}</ion-card-title>
                 <div class="product-details">
                   <span class="wine-type {{ product.type.toLowerCase() }}">{{ product.type }}</span>
                   <span class="wine-region">{{ product.region }}</span>
                 </div>
               </ion-card-header>
-              
-              <ion-card-content>
+
+              <ion-card-content class="card-content">
                 <div class="product-image">
-                  <span class="wine-emoji">
-                    {{ product.type === 'Red' ? '🍷' : product.type === 'White' ? '🥂' : product.type === 'Rosé' ? '🌹' : '✨' }}
-                  </span>
+                  <div class="image-frame">
+                    @if (product.name === 'Cabernet Sauvignon') {
+                      <img src="assets/images/yellow_tail.png" [alt]="product.name" loading="lazy" />
+                    } @else {
+                      <ion-icon class="image-placeholder-icon" name="wine-outline"></ion-icon>
+                    }
+                  </div>
                 </div>
-                <p class="price">${{ product.price }}</p>
-                <ion-button expand="block" (click)="addToCart(product)" color="primary">
-                  <ion-icon name="cart-outline" slot="start"></ion-icon>
-                  Add to Cart
-                </ion-button>
+
+                <div class="pricing">
+                  <div class="right">
+                    <p class="price">${{ product.price }}</p>
+                    <ion-button fill="solid" (click)="addToCart(product)" color="primary">
+                      <ion-icon name="cart-outline" slot="start"></ion-icon>
+                      Add
+                    </ion-button>
+                  </div>
+                </div>
+
+                <div class="card-footer">
+                  <div class="rating" aria-label="Rated 4 out of 5">
+                    <ion-icon name="star" class="star filled"></ion-icon>
+                    <ion-icon name="star" class="star filled"></ion-icon>
+                    <ion-icon name="star" class="star filled"></ion-icon>
+                    <ion-icon name="star" class="star filled"></ion-icon>
+                    <ion-icon name="star-outline" class="star"></ion-icon>
+                  </div>
+                </div>
               </ion-card-content>
             </ion-card>
           </ion-col>
