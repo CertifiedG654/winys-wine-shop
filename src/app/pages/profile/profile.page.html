@@ -3,11 +3,88 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Profile</ion-title>
+    <ion-title>My Profile</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h2>Your Profile</h2>
-  <p>Profile page coming soon!</p>
+  @if (isLoading) {
+    <div class="ion-text-center">
+      <ion-spinner></ion-spinner>
+    </div>
+  } @else if (user) {
+    <ion-card>
+      <ion-card-header class="ion-text-center">
+        @if (user.profileImage) {
+          <img [src]="user.profileImage" alt="Profile" class="profile-avatar">
+        } @else {
+          <ion-icon name="person-circle-outline" class="profile-avatar-icon"></ion-icon>
+        }
+        <ion-card-title>{{ user.firstName }} {{ user.lastName }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        @if (user.hasPendingUpdates) {
+          <ion-item lines="none" color="light" class="pending-notice">
+            <ion-icon name="information-circle-outline" slot="start" color="warning"></ion-icon>
+            <ion-label class="ion-text-wrap">
+              You have pending changes awaiting admin approval. You cannot make new edits until they are reviewed.
+            </ion-label>
+          </ion-item>
+        }
+
+        <form [formGroup]="profileForm" (ngSubmit)="saveChanges()">
+          <ion-list>
+            <ion-item>
+              <ion-label position="stacked">First Name</ion-label>
+              <ion-input formControlName="firstName" readonly></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Last Name</ion-label>
+              <ion-input formControlName="lastName" readonly></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input formControlName="email" readonly></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Address</ion-label>
+              <ion-input formControlName="address" [readonly]="!isEditing || user.hasPendingUpdates"></ion-input>
+            </ion-item>
+
+            <ion-item>
+              <ion-label position="stacked">Contact Number</ion-label>
+              <ion-input formControlName="contactNumber" type="tel" [readonly]="!isEditing || user.hasPendingUpdates"></ion-input>
+            </ion-item>
+          </ion-list>
+
+          <div class="ion-padding-top">
+            @if (!isEditing) {
+              <ion-button expand="block" (click)="toggleEdit()" [disabled]="user.hasPendingUpdates">
+                <ion-icon name="create-outline" slot="start"></ion-icon>
+                Edit Profile
+              </ion-button>
+            } @else {
+              <div>
+                <ion-button expand="block" type="submit" [disabled]="profileForm.invalid">
+                  <ion-icon name="save-outline" slot="start"></ion-icon>
+                  Save & Request Approval
+                </ion-button>
+                <ion-button expand="block" fill="outline" color="medium" (click)="toggleEdit()">
+                  Cancel
+                </ion-button>
+              </div>
+            }
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  } @else {
+    <div class="ion-text-center">
+      <ion-text color="medium">Could not load user profile.</ion-text>
+    </div>
+  }
 </ion-content>

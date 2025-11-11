@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ProductService } from './product.service';
 
 export interface CartItem {
   product: any;
@@ -38,7 +39,7 @@ export class CartService {
   public cartItems$ = this.cartItems.asObservable();
   public orders$ = this.orders.asObservable();
 
-  constructor() {
+  constructor(private productService: ProductService) {
     this.loadCartFromStorage();
     this.loadOrdersFromStorage();
   }
@@ -92,6 +93,10 @@ export class CartService {
     return this.cartItems.value.reduce((count, item) => count + item.quantity, 0);
   }
 
+  getCartItems(): CartItem[] {
+    return this.cartItems.getValue();
+  }
+
   private saveCartToStorage() {
     localStorage.setItem('cart', JSON.stringify(this.cartItems.value));
   }
@@ -136,11 +141,24 @@ export class CartService {
     return order;
   }
 
-  updateOrderStatus(orderId: string, status: Order['status'], note?: string) {
+  async updateOrderStatus(orderId: string, status: Order['status'], note?: string) {
     const currentOrders = this.orders.value;
     const order = currentOrders.find(o => o.id === orderId);
     
     if (order) {
+      const oldStatus = order.status;
+
+      // Deduct stock when moving to 'processing'
+      if (status === 'processing' && oldStatus !== 'processing') {
+        for (const item of order.items) {
+          const product = await this.productService.getProductById(item.product.id);
+          if (product) {
+            const newStock = product.stock - item.quantity;
+            await this.productService.updateProductStock(product.id, newStock >= 0 ? newStock : 0);
+          }
+        }
+      }
+
       order.status = status;
       order.statusHistory.push({
         status,

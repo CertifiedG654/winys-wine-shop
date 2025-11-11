@@ -20,9 +20,6 @@
         <ion-button (click)="goToProfile()" class="welcome-button ion-hide-md-down">
           Welcome, {{ getCurrentUser()?.firstName }}
         </ion-button>
-        <ion-button (click)="logout()" color="danger">
-          <ion-icon name="log-out-outline" slot="icon-only"></ion-icon>
-        </ion-button>
       }
     </ion-buttons>
   </ion-toolbar>
@@ -154,6 +151,13 @@
                       <span>{{ selectedProduct.abv }}</span>
                     </div>
                   }
+
+                  <div class="detail-item">
+                    <strong>Stock Level</strong>
+                    <ion-badge [color]="selectedProduct.stock > 10 ? 'success' : 'warning'">
+                      {{ selectedProduct.stock > 10 ? 'In Stock' : 'Low Stock' }} ({{ selectedProduct.stock }} left)
+                    </ion-badge>
+                  </div>
                 </div>
 
                 <div class="description">
@@ -175,10 +179,16 @@
                   </div>
                 }
 
-                <ion-button expand="block" (click)="addToCart(selectedProduct)" class="add-to-cart-button">
-                  Add to Cart
-                  <ion-icon name="cart-outline" slot="end"></ion-icon>
-                </ion-button>
+                @if (selectedProduct.stock > 0) {
+                  <ion-button expand="block" (click)="addToCart(selectedProduct)" class="add-to-cart-button">
+                    Add to Cart
+                    <ion-icon name="cart-outline" slot="end"></ion-icon>
+                  </ion-button>
+                } @else {
+                  <ion-button expand="block" class="add-to-cart-button" disabled="true">
+                    Out of Stock
+                  </ion-button>
+                }
               </div>
             </div>
           </div>

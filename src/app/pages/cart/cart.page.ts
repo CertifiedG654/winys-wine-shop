@@ -74,6 +74,10 @@ export class CartPage implements OnInit {
   }
 
   increaseQuantity(item: CartItem) {
+    if (item.quantity >= item.product.stock) {
+      this.showToast(`Only ${item.product.stock} items are available.`, 'warning');
+      return;
+    }
     this.cartService.updateQuantity(item.product.id, item.quantity + 1);
   }
 
@@ -95,6 +99,12 @@ export class CartPage implements OnInit {
   placeOrder() {
     if (this.cartItems.length === 0) {
       this.showToast('Your cart is empty', 'warning');
+      return;
+    }
+
+    const outOfStockItem = this.cartItems.find(item => item.quantity > item.product.stock);
+    if (outOfStockItem) {
+      this.showToast(`Cannot place order. ${outOfStockItem.product.name} only has ${outOfStockItem.product.stock} items in stock.`, 'danger');
       return;
     }
 
@@ -122,5 +132,9 @@ export class CartPage implements OnInit {
 
   getCartItemCount(): number {
     return this.cartItems.reduce((count, item) => count + item.quantity, 0);
+  }
+
+  isOrderDisabled(): boolean {
+    return this.cartItems.some(item => item.quantity > item.product.stock);
   }
 }

@@ -14,8 +14,6 @@ import {
   IonIcon,
   IonAvatar,
   IonMenuToggle,
-  IonItemDivider,
-  IonText
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { 
@@ -30,7 +28,9 @@ import {
   logOutOutline,
   barChartOutline,
   peopleOutline,
-  bagCheckOutline
+  bagCheckOutline,
+  cubeOutline,
+  logInOutline
 } from 'ionicons/icons';
 import { AuthService, User } from 'src/app/services/auth.service';
 
@@ -54,8 +54,6 @@ import { AuthService, User } from 'src/app/services/auth.service';
     IonIcon,
     IonAvatar,
     IonMenuToggle,
-    IonItemDivider,
-    IonText
   ]
 })
 export class SideMenuComponent {
@@ -64,7 +62,7 @@ export class SideMenuComponent {
     public authService: AuthService,
     private router: Router
   ) {
-    addIcons({personOutline,callOutline,wineOutline,cartOutline,receiptOutline,businessOutline,informationCircleOutline,codeSlashOutline,bagCheckOutline,peopleOutline,barChartOutline,logOutOutline});
+    addIcons({personOutline,callOutline,wineOutline,cartOutline,receiptOutline,businessOutline,informationCircleOutline,codeSlashOutline,bagCheckOutline,peopleOutline,barChartOutline,logOutOutline, cubeOutline, logInOutline});
   }
 
   async logout() {
@@ -79,7 +77,7 @@ export class SideMenuComponent {
 
   getContactNumber(): string {
     const user = this.authService.getCurrentUser();
-    return user?.contactNumber || 'No contact number';
+    return user?.contactNumber || '';
   }
 
   getProfileImage(): string {
@@ -90,5 +88,9 @@ export class SideMenuComponent {
   isAdmin(): boolean {
     const user = this.authService.getCurrentUser();
     return user?.role === 'admin';
+  }
+
+  isLoggedIn(): boolean {
+    return this.authService.isLoggedIn();
   }
 }

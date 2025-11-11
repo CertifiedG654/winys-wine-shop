@@ -4,15 +4,6 @@ import { AdminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'products',
-    pathMatch: 'full'
-  },
-  {
-    path: 'products',
-    loadComponent: () => import('./pages/products/products.page').then(m => m.ProductsPage)
-  },
-  {
     path: 'login',
     loadComponent: () => import('./pages/login/login.page').then(m => m.LoginPage)
   },
@@ -21,20 +12,35 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/register/register.page').then(m => m.RegisterPage)
   },
   {
-    path: 'company-history',
-    loadComponent: () => import('./pages/company-history/company-history.page').then(m => m.CompanyHistoryPage)
-  },
-  {
-    path: 'about-app',
-    loadComponent: () => import('./pages/about-app/about-app.page').then(m => m.AboutAppPage)
-  },
-  {
-    path: 'developers',
-    loadComponent: () => import('./pages/developers/developers.page').then(m => m.DevelopersPage)
-  },
-  {
-    path: 'contact-us',
-    loadComponent: () => import('./pages/contact-us/contact-us.page').then(m => m.ContactUsPage)
+    path: '',
+    loadComponent: () => import('./components/side-menu/side-menu.component').then(m => m.SideMenuComponent),
+    children: [
+      {
+        path: 'products',
+        loadComponent: () => import('./pages/products/products.page').then(m => m.ProductsPage)
+      },
+      {
+        path: 'company-history',
+        loadComponent: () => import('./pages/company-history/company-history.page').then(m => m.CompanyHistoryPage)
+      },
+      {
+        path: 'about-app',
+        loadComponent: () => import('./pages/about-app/about-app.page').then(m => m.AboutAppPage)
+      },
+      {
+        path: 'developers',
+        loadComponent: () => import('./pages/developers/developers.page').then(m => m.DevelopersPage)
+      },
+      {
+        path: 'contact-us',
+        loadComponent: () => import('./pages/contact-us/contact-us.page').then(m => m.ContactUsPage)
+      },
+      {
+        path: '',
+        redirectTo: 'products',
+        pathMatch: 'full'
+      }
+    ]
   },
   {
     path: 'admin/orders',
@@ -49,6 +55,11 @@ export const routes: Routes = [
   {
     path: 'admin/user-management',
     loadComponent: () => import('./pages/admin/user-management/user-management.page').then(m => m.UserManagementPage),
+    canActivate: [AdminGuard]
+  },
+  {
+    path: 'admin/stock-inventory',
+    loadComponent: () => import('./pages/admin/stock-inventory.page').then(m => m.StockInventoryPage),
     canActivate: [AdminGuard]
   },
   {

@@ -1,168 +1,92 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Create Account</ion-title>
+    <ion-title>Register</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
   <div class="register-container">
     <ion-card>
-      <ion-card-header>
-        <ion-card-title>Join Winys Store</ion-card-title>
-        <ion-card-title style="font-size: 16px; margin-top: 8px;">Create your customer account</ion-card-title>
+      <ion-card-header class="ion-text-center">
+        <ion-icon name="person-add-outline" size="large" color="primary"></ion-icon>
+        <ion-card-title>Create an Account</ion-card-title>
       </ion-card-header>
-      
+
       <ion-card-content>
-        <form (ngSubmit)="register()">
-          <ion-list>
-            <!-- Profile Image Upload -->
-            <ion-item lines="none">
-              <ion-label class="profile-image-label">Profile Image (Optional)</ion-label>
-            </ion-item>
-            <ion-item lines="none">
-              <div class="profile-image-container">
-                <div class="profile-image-preview" [class.has-image]="profileImagePreview">
-                  @if (profileImagePreview) {
-                    <img [src]="profileImagePreview" alt="Profile Preview">
-                  } @else {
-                    <div class="profile-image-placeholder">
-                      <ion-icon name="person-outline"></ion-icon>
-                    </div>
-                  }
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
+          <div class="profile-image-container ion-padding-bottom">
+            <ion-label class="profile-image-label">Profile Picture (Optional)</ion-label>
+            <div class="profile-image-preview" [class.has-image]="profileImage">
+              @if (profileImage) {
+                <img [src]="profileImage" alt="Profile Preview">
+              } @else {
+                <div class="profile-image-placeholder">
+                  <ion-icon name="person-circle-outline"></ion-icon>
                 </div>
-                <!-- File Input -->
-                <input 
-                  type="file"
-                  #fileInput
-                  accept="image/*"
-                  style="display: none"
-                  (change)="onFileSelected($event)"
-                >
-                
-                <!-- Camera View -->
-                @if (showCamera) {
-                  <div class="camera-container">
-                    <video #video autoplay playsinline style="width: 100%; max-width: 300px;"></video>
-                    <canvas #canvas style="display: none;"></canvas>
-                    <div class="camera-controls">
-                      <ion-button color="primary" (click)="takePicture()">
-                        Capture
-                      </ion-button>
-                      <ion-button color="danger" (click)="stopCamera()">
-                        Cancel
-                      </ion-button>
-                    </div>
-                  </div>
-                }
-                
-                <!-- Upload Buttons -->
-                @if (!showCamera) {
-                  <div class="upload-buttons">
-                    <ion-button fill="clear" size="small" class="upload-button" (click)="openImageOptions()">
-                      <ion-icon name="camera-outline" slot="start"></ion-icon>
-                      Select Photo
-                    </ion-button>
-                    <ion-text color="medium" class="upload-hint">
-                      Select or take a new photo
-                    </ion-text>
-                  </div>
-                }
-                @if (profileImagePreview) {
-                  <ion-button fill="clear" color="danger" (click)="removeProfileImage()" size="small">
-                    <ion-icon name="trash-outline" slot="start"></ion-icon>
-                    Remove
-                  </ion-button>
-                }
-              </div>
-            </ion-item>
+              }
+            </div>
 
+            <div class="upload-buttons">
+              <input #fileUpload type="file" (change)="onFileSelected($event)" accept="image/*" hidden>
+              <ion-button (click)="fileUpload.click()" fill="outline" class="upload-button">
+                <ion-icon name="image-outline" slot="start"></ion-icon>
+                Upload Image
+              </ion-button>
+              @if (profileImage) {
+                <ion-button (click)="removeImage()" fill="clear" color="danger" size="small">
+                  <ion-icon name="trash-outline" slot="start"></ion-icon> Remove
+                </ion-button>
+              }
+            </div>
+          </div>
+          <ion-list>
             <ion-item>
-              <ion-label position="stacked">First Name *</ion-label>
-              <ion-input 
-                [(ngModel)]="userData.firstName" 
-                name="firstName"
-                type="text" 
-                required
-                placeholder="Enter your first name">
-              </ion-input>
+              <ion-input label="First Name" labelPlacement="stacked" formControlName="firstName" type="text" required></ion-input>
             </ion-item>
-
             <ion-item>
-              <ion-label position="stacked">Last Name *</ion-label>
-              <ion-input 
-                [(ngModel)]="userData.lastName" 
-                name="lastName"
-                type="text" 
-                required
-                placeholder="Enter your last name">
-              </ion-input>
+              <ion-input label="Last Name" labelPlacement="stacked" formControlName="lastName" type="text" required></ion-input>
             </ion-item>
-
             <ion-item>
-              <ion-label position="stacked">Email Address *</ion-label>
-              <ion-input 
-                [(ngModel)]="userData.email" 
-                name="email"
-                type="email" 
-                required
-                placeholder="Enter your email">
-              </ion-input>
+              <ion-input label="Email" labelPlacement="stacked" formControlName="email" type="email" required></ion-input>
             </ion-item>
-
             <ion-item>
-              <ion-label position="stacked">Address</ion-label>
-              <ion-input 
-                [(ngModel)]="userData.address" 
-                name="address"
-                type="text" 
-                placeholder="Enter your address">
-              </ion-input>
+              <ion-input label="Address" labelPlacement="stacked" formControlName="address" type="text" required></ion-input>
             </ion-item>
-
             <ion-item>
-              <ion-label position="stacked">Contact Number</ion-label>
-              <ion-input 
-                [(ngModel)]="userData.contactNumber" 
-                name="contactNumber"
-                type="tel" 
-                placeholder="Enter your phone number">
-              </ion-input>
+              <ion-input label="Contact Number" labelPlacement="stacked" formControlName="contactNumber" type="tel" required></ion-input>
             </ion-item>
-
             <ion-item>
-              <ion-label position="stacked">Password *</ion-label>
-              <ion-input 
-                [(ngModel)]="userData.password" 
-                name="password"
-                type="password" 
-                required
-                placeholder="Create a password">
-              </ion-input>
+              <ion-input label="Password" labelPlacement="stacked" formControlName="password" type="password" required></ion-input>
             </ion-item>
-
             <ion-item>
-              <ion-label position="stacked">Confirm Password *</ion-label>
-              <ion-input 
-                [(ngModel)]="userData.confirmPassword" 
-                name="confirmPassword"
-                type="password" 
-                required
-                placeholder="Confirm your password">
-              </ion-input>
+              <ion-input label="Confirm Password" labelPlacement="stacked" formControlName="confirmPassword" type="password" required></ion-input>
             </ion-item>
           </ion-list>
 
-          <ion-button 
-            type="submit" 
-            expand="block" 
-            [disabled]="isLoading"
-            class="register-button">
-            Create Account
+          @if (registerForm.errors?.['passwordsMismatch'] && registerForm.get('confirmPassword')?.dirty) {
+            <ion-note class="ion-padding-start" color="danger">
+              Passwords do not match.
+            </ion-note>
+          }
+          @if (registerForm.get('password')?.dirty && registerForm.get('password')?.errors) {
+            <ion-note class="ion-padding-start">
+              <div [class.valid]="!registerForm.get('password')?.errors?.['minLength']"><ion-icon [name]="!registerForm.get('password')?.errors?.['minLength'] ? 'checkmark-circle' : 'close-circle'" [color]="!registerForm.get('password')?.errors?.['minLength'] ? 'success' : 'danger'"></ion-icon> At least 8 characters</div>
+              <div [class.valid]="!registerForm.get('password')?.errors?.['uppercase']"><ion-icon [name]="!registerForm.get('password')?.errors?.['uppercase'] ? 'checkmark-circle' : 'close-circle'" [color]="!registerForm.get('password')?.errors?.['uppercase'] ? 'success' : 'danger'"></ion-icon> An uppercase letter</div>
+              <div [class.valid]="!registerForm.get('password')?.errors?.['lowercase']"><ion-icon [name]="!registerForm.get('password')?.errors?.['lowercase'] ? 'checkmark-circle' : 'close-circle'" [color]="!registerForm.get('password')?.errors?.['lowercase'] ? 'success' : 'danger'"></ion-icon> A lowercase letter</div>
+              <div [class.valid]="!registerForm.get('password')?.errors?.['number']"><ion-icon [name]="!registerForm.get('password')?.errors?.['number'] ? 'checkmark-circle' : 'close-circle'" [color]="!registerForm.get('password')?.errors?.['number'] ? 'success' : 'danger'"></ion-icon> A number</div>
+              <div [class.valid]="!registerForm.get('password')?.errors?.['special']"><ion-icon [name]="!registerForm.get('password')?.errors?.['special'] ? 'checkmark-circle' : 'close-circle'" [color]="!registerForm.get('password')?.errors?.['special'] ? 'success' : 'danger'"></ion-icon> A special character (!@#...)</div>
+            </ion-note>
+          }
+
+          <ion-button class="register-button" type="submit" expand="block" [disabled]="registerForm.invalid">
+            Register
           </ion-button>
         </form>
 
         <div class="login-link">
-          <p>Already have an account? <a [routerLink]="['/login']">Sign In</a></p>
+          <ion-text>
+            Already have an account? <a routerLink="/login">Log in</a>
+          </ion-text>
         </div>
       </ion-card-content>
     </ion-card>

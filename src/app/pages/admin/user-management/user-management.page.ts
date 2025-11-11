@@ -45,8 +45,9 @@ import {
   locationOutline,
   createOutline,
   trashOutline,
-  arrowBackOutline
-} from 'ionicons/icons';
+  arrowBackOutline,
+  checkmarkCircleOutline,
+  closeCircleOutline, alertCircleOutline } from 'ionicons/icons';
 import { AuthService } from '../../../services/auth.service';
 
 import { User } from '../../../services/auth.service';
@@ -101,7 +102,7 @@ export class UserManagementPage implements OnInit {
     private router: Router,
     private location: Location
   ) {
-    addIcons({arrowBackOutline,personOutline,mailOutline,calendarOutline,createOutline,trashOutline,searchOutline,filterOutline,keyOutline,timeOutline,callOutline,locationOutline});
+    addIcons({arrowBackOutline,personOutline,mailOutline,calendarOutline,createOutline,trashOutline,alertCircleOutline,checkmarkCircleOutline,closeCircleOutline,searchOutline,filterOutline,keyOutline,timeOutline,callOutline,locationOutline});
   }
 
   ngOnInit() {
@@ -241,6 +242,52 @@ export class UserManagementPage implements OnInit {
               this.showToast('User deleted successfully', 'success');
             } catch (error) {
               this.showToast('Error deleting user', 'danger');
+            }
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+  async handleUpdateRequest(user: User, approve: boolean) {
+    const action = approve ? 'Approve' : 'Reject';
+    const alert = await this.alertController.create({
+      header: `${action} Update`,
+      message: `Are you sure you want to ${action.toLowerCase()} the requested changes for ${user.firstName} ${user.lastName}?`,
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel'
+        },
+        {
+          text: action,
+          handler: async () => {
+            const loading = await this.loadingController.create({
+              message: 'Processing request...',
+            });
+            await loading.present();
+
+            try {
+              let success = false;
+              if (approve) {
+                success = await this.authService.approveUserUpdate(user.id);
+              } else {
+                success = await this.authService.rejectUserUpdate(user.id);
+              }
+
+              if (success) {
+                this.showToast(`Update request ${action.toLowerCase()}ed successfully.`, 'success');
+                this.loadUsers(); // Refresh list to show updated data
+              } else {
+                this.showToast(`Failed to ${action.toLowerCase()} the request.`, 'danger');
+              }
+            } catch (error) {
+              console.error(`Error ${action.toLowerCase()}ing update:`, error);
+              this.showToast('An error occurred.', 'danger');
+            } finally {
+              loading.dismiss();
             }
           }
         }

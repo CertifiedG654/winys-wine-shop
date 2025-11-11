@@ -86,6 +86,30 @@
           </ion-row>
         </ion-grid>
       </ion-item>
+      @if (user.hasPendingUpdates && user.pendingUpdates) {
+        <ion-item lines="none" class="pending-update-item">
+          <ion-grid>
+            <ion-row class="ion-align-items-center">
+              <ion-col size="12">
+                <ion-label color="warning">
+                  <ion-icon name="alert-circle-outline" slot="start"></ion-icon>
+                  Pending Update Request:
+                </ion-label>
+                @if (user.pendingUpdates.address) { <p><strong>New Address:</strong> {{ user.pendingUpdates.address }}</p> }
+                @if (user.pendingUpdates.contactNumber) { <p><strong>New Contact:</strong> {{ user.pendingUpdates.contactNumber }}</p> }
+              </ion-col>
+              <ion-col size="12" class="ion-text-end">
+                <ion-button (click)="handleUpdateRequest(user, true); $event.stopPropagation()" color="success" fill="outline" size="small">
+                  <ion-icon name="checkmark-circle-outline" slot="start"></ion-icon> Approve
+                </ion-button>
+                <ion-button (click)="handleUpdateRequest(user, false); $event.stopPropagation()" color="danger" fill="outline" size="small">
+                  <ion-icon name="close-circle-outline" slot="start"></ion-icon> Reject
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      }
     }
   </ion-list>
 
@@ -143,6 +167,13 @@
                       <ion-label>
                         <h2>Address</h2>
                         <p>{{ selectedUser.address || 'Not provided' }}</p>
+                      </ion-label>
+                    </ion-item>
+
+                    <ion-item>
+                      <ion-label>
+                        <h2>Password</h2>
+                        <p>{{ selectedUser.password }}</p>
                       </ion-label>
                     </ion-item>
 

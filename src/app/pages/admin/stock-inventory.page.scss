@@ -1,0 +1,35 @@
+ion-card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-header {
+    background-color: var(--ion-color-light);
+    border-bottom: 2px solid var(--ion-color-medium-tint);
+    font-size: 0.9rem;
+}
+
+ion-item ion-col {
+    display: flex;
+    align-items: center;
+}
+
+.product-name {
+    font-size: 0.9em;
+    white-space: normal;
+}
+
+.stock-input {
+    border: 1px solid var(--ion-color-medium-tint);
+    border-radius: 4px;
+    --padding-start: 8px;
+    --padding-end: 8px;
+    text-align: center;
+    max-width: 80px;
+    margin: 0 auto;
+}

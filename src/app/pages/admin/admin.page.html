@@ -21,19 +21,23 @@
         <p>You have access to the following administrative features:</p>
         
         <ion-list>
-          <ion-item button (click)="navigateToOrders()">
+          <ion-item button routerLink="/admin/orders">
             <ion-icon name="cart-outline" slot="start"></ion-icon>
             <ion-label>Order Management</ion-label>
           </ion-item>
-          <ion-item button (click)="navigateToAnalytics()">
+          <ion-item button routerLink="/admin/sales-analytics">
             <ion-icon name="bar-chart-outline" slot="start"></ion-icon>
             <ion-label>Sales Analytics</ion-label>
           </ion-item>
-          <ion-item button (click)="navigateToUserManagement()">
+          <ion-item button routerLink="/admin/user-management">
             <ion-icon name="people-outline" slot="start"></ion-icon>
             <ion-label>User Management</ion-label>
           </ion-item>
-          <ion-item button disabled>
+          <ion-item button routerLink="/admin/stock-inventory">
+            <ion-icon name="cube-outline" slot="start"></ion-icon>
+            <ion-label>Stock Inventory</ion-label>
+          </ion-item>
+          <ion-item button disabled="true">
             <ion-icon name="settings-outline" slot="start"></ion-icon>
             <ion-label>Store Settings</ion-label>
             <ion-text color="medium" slot="end">Coming Soon</ion-text>
@@ -42,43 +46,5 @@
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Quick Stats</ion-card-title>
-      </ion-card-header>
-      
-      <ion-card-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col size="6">
-              <div class="stat-card">
-                <h3>150</h3>
-                <p>Total Products</p>
-              </div>
-            </ion-col>
-            <ion-col size="6">
-              <div class="stat-card">
-                <h3>1,234</h3>
-                <p>Total Orders</p>
-              </div>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col size="6">
-              <div class="stat-card">
-                <h3>89</h3>
-                <p>Active Customers</p>
-              </div>
-            </ion-col>
-            <ion-col size="6">
-              <div class="stat-card">
-                <h3>$12,567</h3>
-                <p>Revenue</p>
-              </div>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
   </div>
 </ion-content>

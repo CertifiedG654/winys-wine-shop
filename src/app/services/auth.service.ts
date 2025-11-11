@@ -11,6 +11,11 @@ export interface User {
   contactNumber: string;
   profileImage?: string;
   role: 'admin' | 'customer';
+  pendingUpdates?: {
+    address?: string;
+    contactNumber?: string;
+  };
+  hasPendingUpdates?: boolean;
   lastLogin?: Date;
   createdAt: Date;
 }
@@ -89,6 +94,45 @@ export class AuthService {
     if (userIndex !== -1) {
       this.users[userIndex].lastLogin = new Date();
     }
+  }
+
+  async requestProfileUpdate(userId: number, updates: { address?: string; contactNumber?: string }): Promise<boolean> {
+    const userIndex = this.users.findIndex(u => u.id === userId);
+    if (userIndex === -1) return false;
+
+    this.users[userIndex].pendingUpdates = updates;
+    this.users[userIndex].hasPendingUpdates = true;
+    localStorage.setItem('users', JSON.stringify(this.users));
+
+    // If this is the current user, update their session
+    if (this.currentUser.value?.id === userId) {
+      const updatedUser = { ...this.users[userIndex] };
+      await this.refreshUserSession(updatedUser);
+    }
+
+    return true;
+  }
+
+  async approveUserUpdate(userId: number): Promise<boolean> {
+    const userIndex = this.users.findIndex(u => u.id === userId);
+    if (userIndex === -1 || !this.users[userIndex].pendingUpdates) return false;
+
+    const updates = this.users[userIndex].pendingUpdates!;
+    this.users[userIndex] = { ...this.users[userIndex], ...updates };
+    delete this.users[userIndex].pendingUpdates;
+    this.users[userIndex].hasPendingUpdates = false;
+    localStorage.setItem('users', JSON.stringify(this.users));
+    return true;
+  }
+
+  async rejectUserUpdate(userId: number): Promise<boolean> {
+    const userIndex = this.users.findIndex(u => u.id === userId);
+    if (userIndex === -1) return false;
+
+    delete this.users[userIndex].pendingUpdates;
+    this.users[userIndex].hasPendingUpdates = false;
+    localStorage.setItem('users', JSON.stringify(this.users));
+    return true;
   }
 
   register(userData: Omit<User, 'id' | 'role' | 'createdAt' | 'lastLogin'>): { success: boolean; error?: string } {

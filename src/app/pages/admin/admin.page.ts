@@ -15,15 +15,12 @@ import {
   IonItem, 
   IonLabel, 
   IonIcon, 
-  IonGrid, 
-  IonRow, 
-  IonCol, 
   IonButtons, 
   IonButton,
   IonText
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { cubeOutline, peopleOutline, barChartOutline, settingsOutline, logOutOutline, cartOutline } from 'ionicons/icons';
+import { cubeOutline, peopleOutline, barChartOutline, settingsOutline, logOutOutline, cartOutline, chatbubblesOutline } from 'ionicons/icons';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -47,9 +44,6 @@ import { AuthService } from 'src/app/services/auth.service';
     IonItem,
     IonLabel,
     IonIcon,
-    IonGrid,
-    IonRow,
-    IonCol,
     IonButtons,
     IonButton,
     IonText
@@ -61,7 +55,7 @@ export class AdminPage implements OnInit {
     private authService: AuthService,
     private router: Router
   ) {
-    addIcons({ cubeOutline, peopleOutline, barChartOutline, settingsOutline, logOutOutline, cartOutline });
+    addIcons({logOutOutline,cartOutline,barChartOutline,peopleOutline,chatbubblesOutline,cubeOutline,settingsOutline});
   }
 
   ngOnInit() {}
@@ -81,5 +75,9 @@ export class AdminPage implements OnInit {
 
   navigateToUserManagement() {
     this.router.navigate(['/admin/user-management']);
+  }
+
+  navigateToStockInventory() {
+    this.router.navigate(['/admin/stock-inventory']);
   }
 }
