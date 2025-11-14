@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { 
@@ -57,6 +57,7 @@ import { AuthService, User } from 'src/app/services/auth.service';
   ]
 })
 export class SideMenuComponent {
+  @ViewChild('menu') menu: IonMenu | undefined;
 
   constructor(
     public authService: AuthService,

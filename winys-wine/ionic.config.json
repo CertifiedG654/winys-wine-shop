@@ -1,0 +1,7 @@
+{
+  "name": "Winys Wine",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

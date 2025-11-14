@@ -16,6 +16,8 @@ import {
   IonCardHeader,
   IonCardTitle,
   IonCardContent,
+  IonBackButton,
+  IonButtons,
   LoadingController,
   ToastController
 } from '@ionic/angular/standalone';
@@ -42,7 +44,9 @@ import { AuthService } from 'src/app/services/auth.service';
     IonCard,
     IonCardHeader,
     IonCardTitle,
-    IonCardContent
+    IonCardContent,
+    IonBackButton,
+    IonButtons
   ]
 })
 export class LoginPage {

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button menuId="main-menu"></ion-menu-button>
+      <ion-menu-button autoHide="false" menuId="main-menu"></ion-menu-button>
     </ion-buttons>
     <ion-title class="ion-hide-md-down">Winys Store</ion-title>
     <ion-buttons slot="end" class="header-buttons">
@@ -33,10 +33,29 @@
         <p class="page-subtitle">30 exquisite wines from around the world</p>
       </div>
     </section>
+
+    <!-- Search Bar -->
+    <ion-searchbar 
+      [(ngModel)]="searchQuery"
+      (ionInput)="filterProducts($event)"
+      placeholder="Search by name or wine type..."
+      show-clear-button="always"
+      class="search-bar">
+    </ion-searchbar>
+    
+    <!-- Results Count -->
+    <div class="search-results-info" *ngIf="searchQuery">
+      <p>Found {{ filteredProducts.length }} result(s)</p>
+    </div>
+
+    <!-- No Results Message -->
+    <div class="no-results" *ngIf="searchQuery && filteredProducts.length === 0">
+      <p>No wines found matching your search. Try different keywords!</p>
+    </div>
     
     <ion-grid>
       <ion-row>
-        @for (product of products; track product.id) {
+        @for (product of filteredProducts; track product.id) {
           <ion-col size="12" size-md="6" size-lg="4">
             <ion-card class="product-card premium-card" (click)="openProductDetails(product)">
               <div class="product-image-container">

@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/products"></ion-back-button>
+    </ion-buttons>
     <ion-title>Sign In</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -49,11 +52,6 @@
 
         <div class="register-link">
           <p>Don't have an account? <a [routerLink]="['/register']">Create One</a></p>
-        </div>
-
-        <div class="demo-accounts">
-          <h3>Demo Accounts:</h3>
-          <p><strong>Admin:</strong> admin@winys.com / admin123</p>
         </div>
       </ion-card-content>
     </ion-card>

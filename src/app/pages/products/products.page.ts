@@ -22,6 +22,7 @@ import {
   IonModal,
   IonText,
   IonBadge,
+  IonSearchbar,
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { cartOutline, logInOutline, logOutOutline, wineOutline, star, starOutline } from 'ionicons/icons';
@@ -310,6 +311,35 @@ import { CartService } from 'src/app/services/cart.service';
     ion-button {
       margin-top: 20px;
     }
+
+    /* Search Bar Styles */
+    .search-bar {
+      margin: 16px 12px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .search-results-info {
+      padding: 12px 16px;
+      text-align: center;
+      color: var(--ion-color-medium);
+      font-size: 14px;
+    }
+
+    .no-results {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 200px;
+      padding: 20px;
+      text-align: center;
+      color: var(--ion-color-medium);
+    }
+
+    .no-results p {
+      margin: 0;
+      font-size: 16px;
+    }
   `],
   standalone: true,
   imports: [
@@ -333,7 +363,8 @@ import { CartService } from 'src/app/services/cart.service';
     IonModal,
     IonText,
     IonBadge,
-    IonButtons
+    IonButtons,
+    IonSearchbar
   ]
 })
 export class ProductsPage {
@@ -341,6 +372,8 @@ export class ProductsPage {
   public selectedProduct: any = null;
 
   products: Product[] = [];
+  filteredProducts: Product[] = [];
+  searchQuery: string = '';
 
   constructor(
     private authService: AuthService,
@@ -392,6 +425,32 @@ export class ProductsPage {
 
   async loadProducts() {
     this.products = await this.productService.getProducts();
+    this.filteredProducts = this.products;
+  }
+
+  filterProducts(event: any) {
+    this.searchQuery = event.detail.value.toLowerCase().trim();
+    
+    if (!this.searchQuery) {
+      this.filteredProducts = this.products;
+    } else {
+      this.filteredProducts = this.products.filter(product => {
+        const name = product.name.toLowerCase();
+        const type = product.type.toLowerCase();
+        const region = product.region ? product.region.toLowerCase() : '';
+        
+        return (
+          name.includes(this.searchQuery) ||
+          type.includes(this.searchQuery) ||
+          region.includes(this.searchQuery)
+        );
+      });
+    }
+  }
+
+  clearSearch() {
+    this.searchQuery = '';
+    this.filteredProducts = this.products;
   }
 
   navigateToLogin() {

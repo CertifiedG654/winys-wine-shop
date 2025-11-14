@@ -82,3 +82,14 @@ ion-item {
   margin-top: 16px;
   border-top: 1px solid var(--ion-border-color);
 }
+
+/* Ensure menu and router outlet are properly layered */
+::ng-deep {
+  ion-menu {
+    pointer-events: auto !important;
+  }
+
+  ion-router-outlet {
+    pointer-events: auto !important;
+  }
+}

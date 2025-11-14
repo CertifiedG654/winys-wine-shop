@@ -19,7 +19,9 @@ import {
   IonIcon,
   IonText,
   ToastController,
-  IonNote
+  IonNote,
+  IonBackButton,
+  IonButtons
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { personAddOutline, personCircleOutline, mailOutline, lockClosedOutline, callOutline, locationOutline, trashOutline, imageOutline } from 'ionicons/icons';
@@ -80,7 +82,9 @@ export function passwordsMatchValidator(control: AbstractControl): ValidationErr
     IonButton,
     IonIcon,
     IonText,
-    IonNote
+    IonNote,
+    IonBackButton,
+    IonButtons
   ]
 })
 export class RegisterPage implements OnInit {
